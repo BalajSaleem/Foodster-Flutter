@@ -14,7 +14,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  String baseUrl = 'http://139.179.202.8:8080/api/v1/';
   int _selectedNavIndex = 2;
   bool canApply = true;
   bool canViewQr = false;

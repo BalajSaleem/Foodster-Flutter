@@ -1,8 +1,10 @@
 //import 'package:exodus/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodster/RestCalls/http_caller.dart';
 import 'package:foodster/components/big_button.dart';
-import 'package:http/http.dart' as http;
+import 'package:foodster/pages/ui_utils.dart';
+import 'package:foodster/pref_manager.dart';
 
 //import 'package:exodus/models/Person.dart';
 import 'dart:convert';
@@ -14,50 +16,40 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String baseUrl = 'http://139.179.202.8:8080/api/v1/';
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  TextEditingController _emailController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
   bool isLoading = false;
 
-  void handleLogin(builderContext) async {
+  void handleLogin(BuildContext context) {
     print('handling login');
-    Navigator.of(context).pushNamed('/home');
-    // String email = emailController.text;
-    // String password = passwordController.text;
-    // setState(() {
-    //   isLoading = true;
-    // });
-    //
+    //Navigator.of(context).pushNamed('/home');
+    String email = _emailController.text;
+    String password = _passwordController.text;
 
-    // try{
-    //   http.Response response = await http.get('$baseUrl/persons/$email/$password');
-    //   if(response.statusCode == 200){
-    //     Person user = Person.fromJson(json.decode(response.body));
-    //     print(user.name);
-    //     var route = new MaterialPageRoute(builder: (BuildContext context) => new Home(user: user));
-    //     Navigator.of(context).pushReplacement(route);
-    //   }
-    //   else{
-    //     _showToast(builderContext, 'Sorry, there was trouble logging in');
-    //     setState(() {
-    //       isLoading = false;
-    //     });
-    //   }
-    //
-    // }
-    // catch(e){
-    //   print(e);
-    // }
+    if(email == '' || password == ''){
+     UiUtils.showToast('Email and Password cannot be left empty.');
+     return;
+    }
+    HttpCaller.login(email, password, (bool success, int statusCode, [String token = '']) {
+      if(success){
+        print('Logging in');
+        PrefManager.storeToken(token);
+        Navigator.of(context).pushNamed('/home');
+      }
+      else{
+        UiUtils.showToast('Failed to Log In');
+      }
+    });
   }
 
-  void _showToast(BuildContext context, String message) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
+  // void _showToast(BuildContext context, String message) {
+  //   final scaffold = Scaffold.of(context);
+  //   scaffold.showSnackBar(
+  //     SnackBar(
+  //       content: Text(message),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +71,7 @@ class _LoginState extends State<Login> {
                     child: Column(
                       children: <Widget>[
                         TextField(
-                          controller: emailController,
+                          controller: _emailController,
                           autofillHints: [AutofillHints.username],
                           decoration: InputDecoration(
                               labelText: 'EMAIL',
@@ -88,7 +80,7 @@ class _LoginState extends State<Login> {
                         ),
                         SizedBox(height: 20.0),
                         TextField(
-                          controller: passwordController,
+                          controller: _passwordController,
                           autofillHints: [AutofillHints.password],
                           decoration: InputDecoration(
                               labelText: 'PASSWORD',
