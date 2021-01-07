@@ -19,4 +19,9 @@ class PrefManager {
     await _initialize();
     return _prefs.get(TOKEN);
   }
+
+  static void removeToken() async {
+    await _initialize();
+    _prefs.remove(TOKEN);
+  }
 }

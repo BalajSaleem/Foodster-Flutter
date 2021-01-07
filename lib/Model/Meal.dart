@@ -6,7 +6,7 @@ class Meal {
   List<Recipe> recipes;
   String imgUrl;
 
-  Meal({this.name, this.type, this.calories, this.recipes});
+  Meal({this.name, this.type, this.calories, this.recipes, this.imgUrl});
 
   Meal.fromJson(Map<String, dynamic> json) {
     name = json['name'];

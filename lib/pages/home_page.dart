@@ -1,9 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:foodster/pref_manager.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'meal_page.dart';
+import 'package:foodster/logout.dart';
 
 class Home extends StatefulWidget {
   //const Home({ this.user}) ;
@@ -18,8 +20,6 @@ class _HomeState extends State<Home> {
   bool canApply = true;
   bool canViewQr = false;
   final GlobalKey<ScrollableState> globalScrollKey = new GlobalKey<ScrollableState>();
-
-
 
   // void fetchAllEvents() async{
   //   http.Response response = await http.get('$baseUrl/events/');
@@ -116,7 +116,7 @@ class _HomeState extends State<Home> {
         Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              onTap: () {}, //logout here
+              onTap: () => logout(context), //logout here
               child: Icon(
                 Icons.exit_to_app,
                 size: 26.0,
