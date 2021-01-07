@@ -24,9 +24,11 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_spinkit: ^4.1.2+1
+  fluttertoast: ^7.1.6
   http: ^0.12.2
   #horizontal_calendar: 0.0.1
   date_picker_timeline: ^1.2.1
+  shared_preferences: 0.5.12+4
   #horizontal_center_date_picker: ^1.0.0+2
 
   # The following adds the Cupertino Icons font to your application.

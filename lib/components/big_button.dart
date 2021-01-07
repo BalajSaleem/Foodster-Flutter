@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BigButton extends StatelessWidget {
-  BigButton(this. text, this.onClick);
+  BigButton(this.text, this.onClick);
   final String text;
   final VoidCallback onClick;
   @override

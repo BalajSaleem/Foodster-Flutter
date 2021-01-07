@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodster/pref_manager.dart';
 import 'package:foodster/components/big_button.dart';
 
-//import 'package:exodus/models/Person.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'ui_utils.dart';
+
+import 'package:foodster/RestCalls/http_caller.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -15,6 +16,31 @@ class _SignUpState extends State<SignUp> {
   static const genders = ["Male", "Female", "Apache Helicopter"];
   bool isOfficer = false;
   String selectedGender = genders[0];
+
+  TextEditingController _emailController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
+
+  void _handleRegister(BuildContext context){
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    if(email == '' || password == ''){
+      UiUtils.showToast('Email and Password cannot be left empty.');
+      return;
+    }
+
+    HttpCaller.signup(email, password,
+            (bool success, int statusCode, [String token = '']){
+              if(success) {
+                print('Logging in');
+                PrefManager.storeToken(token);
+                Navigator.of(context).pushNamed('/home');
+              }
+              else{
+                UiUtils.showToast('Failed to Sign Up');
+              }
+            });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +88,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       SizedBox(height: 20.0),
                       TextField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                             labelText: 'EMAIL',
                             labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
@@ -70,6 +97,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       SizedBox(height: 20.0),
                       TextField(
+                        controller: _passwordController,
                         decoration: InputDecoration(
                             labelText: 'PASSWORD',
                             labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
@@ -153,7 +181,7 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(height: 20.0),
                       Container(
                         height: 40.0,
-                        child: BigButton("Register", (){})
+                        child: BigButton("Register", () => _handleRegister(context))
                       ),
                       SizedBox(height: 20.0),
                     ],
