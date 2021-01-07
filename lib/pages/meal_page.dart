@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodster/Model/Meal.dart';
 import 'package:foodster/Model/Recipe.dart';
+import 'package:foodster/components/big_button.dart';
 import 'package:foodster/components/meal_card.dart';
 //import 'package:horizontal_center_date_picker/datepicker_controller.dart';
 //import 'package:horizontal_center_date_picker/horizontal_date_picker.dart';
@@ -17,9 +18,9 @@ class _MealPageState extends State<MealPage> {
 
 
   List<Meal> meals =[
-    Meal(name: "Breakfast", type: 'b', calories: 999 , recipes: [ Recipe(name: "Omelet"), Recipe(name: "Milkshake") ] ),
-    Meal(name: "Lunch", type: 'l', calories: 788, recipes: [ Recipe(name: "Steak"), Recipe(name: "Tuna Sandwich"), Recipe(name: "Boza") ] ),
-    Meal(name: "Dinner", type: 'd', calories: 493, recipes: [ Recipe(name: "Fruit Salad"), Recipe(name: "Nuts") ] )
+    // Meal(name: "Breakfast", type: 'b', calories: 999 , recipes: [ Recipe(name: "Omelet"), Recipe(name: "Milkshake") ] ),
+    // Meal(name: "Lunch", type: 'l', calories: 788, recipes: [ Recipe(name: "Steak"), Recipe(name: "Tuna Sandwich"), Recipe(name: "Boza") ] ),
+    // Meal(name: "Dinner", type: 'd', calories: 493, recipes: [ Recipe(name: "Fruit Salad"), Recipe(name: "Nuts") ] )
   ];
 
 
@@ -29,11 +30,22 @@ class _MealPageState extends State<MealPage> {
       builder: (context) =>  SingleChildScrollView (
           //padding: EdgeInsets.all(12),
           child:
-          Column(children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
             buildDatePicker(context),
+
+            meals.isEmpty?
+            Center(
+              child: TextButton(onPressed: () { setState(() {
+                meals.add(Meal(name: "Breakfast", type: 'b', calories: 999 , recipes: [ Recipe(name: "Omelet"), Recipe(name: "Milkshake") ] ));
+              });}, child: Text("Add Meals")),
+            ):
+            //BigButton("Add Meals", () => { meals.add(Meal(name: "Breakfast", type: 'b', calories: 999 , recipes: [ Recipe(name: "Omelet"), Recipe(name: "Milkshake") ] )) }) :
             Column(
               children: meals.map((meal) => MealCard(meal: meal,)).toList(),
             )
+                //
           ],)
       ),
     );

@@ -116,9 +116,9 @@ class _HomeState extends State<Home> {
         Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {}, //logout here
               child: Icon(
-                Icons.settings,
+                Icons.exit_to_app,
                 size: 26.0,
               ),
             )
