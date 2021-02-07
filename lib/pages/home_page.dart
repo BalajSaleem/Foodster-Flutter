@@ -1,6 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:foodster/controllers/pref_manager.dart';
+import 'package:foodster/pages/RecipePage.dart';
+import 'package:foodster/pages/StatsPage.dart';
+import 'package:foodster/pages/grocery_page.dart';
+import 'package:foodster/pages/user_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -17,7 +21,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   int _selectedNavIndex = 2;
-  Widget loadedWidget = MealPage();
+
+
   final GlobalKey<ScrollableState> globalScrollKey = new GlobalKey<ScrollableState>();
 
   // void fetchAllEvents() async{
@@ -43,20 +48,19 @@ class _HomeState extends State<Home> {
     setState(() {
       _selectedNavIndex = index;
     });
-      switch (_selectedNavIndex) {
-        case 0:
-
-          break;
-
-        case 1:
-
-          break;
-        case 2:
-
-          break;
-      }
-
-
+      // switch (_selectedNavIndex) {
+      //   case 0:
+      //     break;
+      //   case 1:
+      //     break;
+      //   case 2:
+      //     break;
+      //   case 3:
+      //     break;
+      //   case 4:
+      //     break;
+      //
+      // }
   }
 
   @override
@@ -69,7 +73,16 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: loadedWidget,
+      body: IndexedStack(
+        children: [
+          UserPage(),
+          GroceryPage(),
+          MealPage(),
+          RecipePage(),
+          StatsPage(),
+        ],
+        index: _selectedNavIndex,
+      ),
       bottomNavigationBar: buildBottomNavigationBar(),
     );
   }
