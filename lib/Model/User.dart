@@ -2,6 +2,9 @@ class User {
   String sId;
   String email;
   String password;
+  String gender;
+  double height;
+  double weight;
   int iV;
   String token;
 
@@ -11,6 +14,9 @@ class User {
     sId = json['_id'];
     email = json['email'];
     password = json['password'];
+    gender = json['gender'];
+    height = json['height'];
+    weight = json['weight'];
     iV = json['__v'];
     token = json['token'];
   }
@@ -20,6 +26,9 @@ class User {
     data['_id'] = this.sId;
     data['email'] = this.email;
     data['password'] = this.password;
+    data['height'] = this.height;
+    data['weight'] = this.weight;
+    data['gender'] = this.gender;
     data['__v'] = this.iV;
     data['token'] = this.token;
     return data;

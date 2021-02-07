@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodster/pref_manager.dart';
+import 'package:foodster/controllers/pref_manager.dart';
 import 'package:foodster/components/big_button.dart';
 
-import 'ui_utils.dart';
+import '../controllers/ui_utils.dart';
 
-import 'package:foodster/RestCalls/http_caller.dart';
+import 'package:foodster/controllers/http_caller.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -181,7 +181,7 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(height: 20.0),
                       Container(
                         height: 40.0,
-                        child: BigButton("Register", () => _handleRegister(context))
+                        child: BigButton(text: "Register", onClick: () => _handleRegister(context))
                       ),
                       SizedBox(height: 20.0),
                     ],

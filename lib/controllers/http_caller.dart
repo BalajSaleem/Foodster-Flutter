@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class HttpCaller {
   static const String _baseUrl = "https://foodster-cs491.herokuapp.com";
@@ -16,7 +15,6 @@ class HttpCaller {
     ).then((http.Response response) {
       print(response.statusCode);
       print(response.body);
-
       if(response.statusCode == 201)
         callback(true, response.statusCode , json.decode(response.body)['token']);
       else

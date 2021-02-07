@@ -1,17 +1,14 @@
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:foodster/Model/Meal.dart';
 import 'package:foodster/Model/Recipe.dart';
-import 'package:foodster/RestCalls/http_caller.dart';
 import 'package:foodster/components/big_button.dart';
 import 'package:foodster/components/meal_card.dart';
-//import 'package:horizontal_center_date_picker/datepicker_controller.dart';
-//import 'package:horizontal_center_date_picker/horizontal_date_picker.dart';
-//import 'package:horizontal_calendar/horizontal_calendar.dart';
-import 'package:date_picker_timeline/date_picker_timeline.dart';
-import 'package:foodster/logout.dart';
-import 'package:foodster/pages/ui_utils.dart';
+import 'package:foodster/controllers/http_caller.dart';
+import 'package:foodster/controllers/logout.dart';
+import 'package:foodster/controllers/ui_utils.dart';
 
-import '../pref_manager.dart';
+import '../controllers/pref_manager.dart';
 
 
 class MealPage extends StatefulWidget {
@@ -20,7 +17,6 @@ class MealPage extends StatefulWidget {
 }
 
 class _MealPageState extends State<MealPage> {
-
   List<Meal> meals =[
     // Meal(name: "Breakfast", type: 'b', calories: 999 , recipes: [ Recipe(name: "Omelet"), Recipe(name: "Milkshake") ] ),
     // Meal(name: "Lunch", type: 'l', calories: 788, recipes: [ Recipe(name: "Steak"), Recipe(name: "Tuna Sandwich"), Recipe(name: "Boza") ] ),
@@ -78,9 +74,6 @@ class _MealPageState extends State<MealPage> {
             imgUrl: links[i]
           ));
     }
-
-    //newMeals.add(Meal(name: "Breakfast", type: 'b', calories: 999 , recipes: [ Recipe(name: "Omelet"), Recipe(name: "Milkshake")]));
-
     return newMeals;
   }
 
@@ -91,20 +84,15 @@ class _MealPageState extends State<MealPage> {
           //padding: EdgeInsets.all(12),
           child:
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
             buildDatePicker(context),
-
             meals.isEmpty?
-            Center(
-              child: TextButton(onPressed: () async {
-                List<Meal> list = await _handleMealGeneration();
-                setState(() {
-                  meals = list;
-                //meals.add(Meal(name: "Breakfast", type: 'b', calories: 999 , recipes: [ Recipe(name: "Omelet"), Recipe(name: "Milkshake") ] ));
-              });}, child: Text("Add Meals")),
-            ):
-            //BigButton("Add Meals", () => { meals.add(Meal(name: "Breakfast", type: 'b', calories: 999 , recipes: [ Recipe(name: "Omelet"), Recipe(name: "Milkshake") ] )) }) :
+            BigButton(text: "Add Meals" , onClick: () async {
+              List<Meal> list = await _handleMealGeneration();
+              setState(() {
+                meals = list;
+            });
+              }):
             Column(
               children: meals.map((meal) => MealCard(meal: meal,)).toList(),
             )
@@ -115,21 +103,6 @@ class _MealPageState extends State<MealPage> {
   }
 
   Widget buildDatePicker(BuildContext context) {
-    // return HorizontalDatePickerWidget(
-    //         startDate: DateTime.now().subtract(Duration(days: 7)),
-    //         endDate: DateTime.now().add(Duration(days: 7)),
-    //         normalColor: Colors.grey[800],
-    //         disabledColor: Colors.grey[800],
-    //         disabledTextColor: Colors.grey[600],
-    //         selectedDate: DateTime.now(),
-    //         selectedColor: Colors.greenAccent,
-    //         widgetWidth: MediaQuery.of(context).size.width,
-    //         datePickerController: DatePickerController(),
-    //         onValueSelected: (date) {
-    //           print('selected = ${date.toIso8601String()}');
-    //         },
-    //       );
-
     return DatePicker(
       DateTime.now().subtract(Duration(days: 3)),
       height: 92,
@@ -139,9 +112,12 @@ class _MealPageState extends State<MealPage> {
       monthTextStyle: TextStyle(color: Colors.grey, fontSize: 12),
       dateTextStyle: TextStyle(color: Colors.grey, fontSize: 18),
       selectionColor: Colors.greenAccent,
-      onDateChange: (date) => print(
-        date.toString(),
-      ),
+      onDateChange: (date) async {
+        List<Meal> list = await _handleMealGeneration();
+        setState(() {
+        meals = list;
+        });
+      },
     );
 
   }

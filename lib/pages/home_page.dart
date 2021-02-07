@@ -1,11 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:foodster/pref_manager.dart';
+import 'package:foodster/controllers/pref_manager.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'meal_page.dart';
-import 'package:foodster/logout.dart';
+import 'package:foodster/controllers/logout.dart';
 
 class Home extends StatefulWidget {
   //const Home({ this.user}) ;
@@ -17,8 +17,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   int _selectedNavIndex = 2;
-  bool canApply = true;
-  bool canViewQr = false;
+  Widget loadedWidget = MealPage();
   final GlobalKey<ScrollableState> globalScrollKey = new GlobalKey<ScrollableState>();
 
   // void fetchAllEvents() async{
@@ -28,27 +27,6 @@ class _HomeState extends State<Home> {
   //     activities = (data.map((activity) => Activity.fromJson(activity))).toList();
   //   });
   // }
-
-  // void fetchRegisteredEvents() async{
-  //   http.Response response = await http.get('$baseUrl/personEvents/${widget.user.id}');
-  //   List<dynamic> data = json.decode(response.body);
-  //   setState(() {
-  //     activities = (data.map((activity) => Activity.fromJson(activity))).toList();
-  //   });
-  // }
-
-  // void fetchCreatedEvents() async{
-  //   http.Response response = await http.get('$baseUrl/officerEvents/${widget.user.id}');
-  //   List<dynamic> data = json.decode(response.body);
-  //   setState(() {
-  //     activities = (data.map((activity) => Activity.fromJson(activity))).toList();
-  //   });
-  // }
-
-
-  void viewActivityQrCode(event){
-
-  }
 
   void _showToast(BuildContext context,String message) {
     final scaffold = Scaffold.of(context);
@@ -65,29 +43,18 @@ class _HomeState extends State<Home> {
     setState(() {
       _selectedNavIndex = index;
     });
+      switch (_selectedNavIndex) {
+        case 0:
 
+          break;
 
-      // switch (_selectedNavIndex) {
-      //   case 0:
-      //     fetchRemainingUnregisteredActivities();
-      //     canApply = true;
-      //     canViewQr = false;
-      //     break;
-      //   case 1:
-      //     fetchAllEvents();
-      //     setState(() {
-      //       canApply = false;
-      //       canViewQr = false;
-      //     });
-      //     break;
-      //   case 2:
-      //     fetchRegisteredEvents();
-      //     setState(() {
-      //       canApply = false;
-      //       canViewQr = true;
-      //     });
-      //     break;
-      // }
+        case 1:
+
+          break;
+        case 2:
+
+          break;
+      }
 
 
   }
@@ -102,7 +69,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: MealPage(),
+      body: loadedWidget,
       bottomNavigationBar: buildBottomNavigationBar(),
     );
   }
