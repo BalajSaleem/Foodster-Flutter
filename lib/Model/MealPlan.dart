@@ -1,21 +1,30 @@
-import 'Meal.dart';
+import 'package:foodster/Model/MealDay.dart';
 
 class MealPlan {
-  List<Meal> meals;
+  int duration;
+  String startDate;
+  String endDate;
+  List<MealDay> plan;
 
-  MealPlan({this.meals});
+  MealPlan({this.duration, this.startDate, this.endDate, this.plan});
 
   MealPlan.fromJson(Map<String, dynamic> json) {
-    if (json['meals'] != null) {
-      meals = new List<Meal>();
-      json['meals'].forEach((v) { meals.add(new Meal.fromJson(v)); });
+    duration = json['duration'];
+    startDate = json['startDate'];
+    endDate = json['endDate'];
+    if (json['plan'] != null) {
+      plan = new List<MealDay>();
+      json['plan'].forEach((v) { plan.add(new MealDay.fromJson(v)); });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.meals != null) {
-      data['meals'] = this.meals.map((v) => v.toJson()).toList();
+    data['duration'] = this.duration;
+    data['startDate'] = this.startDate;
+    data['endDate'] = this.endDate;
+    if (this.plan != null) {
+      data['plan'] = this.plan.map((v) => v.toJson()).toList();
     }
     return data;
   }

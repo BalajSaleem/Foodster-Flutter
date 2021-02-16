@@ -6,8 +6,8 @@ class Preferences {
   List<int> carbRange;
   List<int> protRange;
   List<int> costRange;
-  List<String> dietType;
-  List<String> difficulty;
+  String dietType;
+  String difficulty;
   List<int> cookingTime;
   List<Ingredient> restrictions;
 
@@ -19,8 +19,8 @@ class Preferences {
     carbRange = json['carbRange'].cast<int>();
     protRange = json['protRange'].cast<int>();
     costRange = json['costRange'].cast<int>();
-    dietType = json['dietType'].cast<String>();
-    difficulty = json['difficulty'].cast<String>();
+    dietType = json['dietType'];
+    difficulty = json['difficulty'];
     cookingTime = json['cookingTime'].cast<int>();
     if (json['restrictions'] != null) {
       restrictions = new List<Ingredient>();

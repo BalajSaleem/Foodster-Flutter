@@ -20,7 +20,9 @@ class User {
   List<Ingredient> likedIngredients;
   List<Ingredient> dislikedIngredients;
 
-  User({this.sId, this.email, this.password, this.gender, this.height, this.weight, this.iV, this.token, this.imgUrl});
+  User({this.sId, this.email, this.password, this.gender, this.height,
+    this.weight, this.iV, this.token, this.imgUrl, this.preferences, this.allergies,
+    this.likedIngredients, this.dislikedIngredients, this.likedRecipes, this.dislikedRecipes});
 
   User.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
