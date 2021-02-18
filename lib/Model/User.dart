@@ -4,8 +4,11 @@ import 'package:foodster/Model/Recipe.dart';
 
 class User {
   String sId;
+  String name;
+  String surname;
   String email;
   String password;
+  int age;
   String gender;
   double height;
   double weight;
@@ -20,15 +23,18 @@ class User {
   List<Ingredient> likedIngredients;
   List<Ingredient> dislikedIngredients;
 
-  User({this.sId, this.email, this.password, this.gender, this.height,
+  User({this.sId, this.email, this.name, this.surname, this.age, this.password, this.gender, this.height,
     this.weight, this.iV, this.token, this.imgUrl, this.preferences, this.allergies,
     this.likedIngredients, this.dislikedIngredients, this.likedRecipes, this.dislikedRecipes});
 
   User.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     email = json['email'];
+    name = json['name'];
+    surname = json['surname'];
     password = json['password'];
     gender = json['gender'];
+    age = json['age'];
     height = json['height'];
     weight = json['weight'];
     iV = json['__v'];
@@ -47,8 +53,11 @@ class User {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
     data['email'] = this.email;
+    data['name'] = this.name;
+    data['surname'] = this.surname;
     data['password'] = this.password;
     data['height'] = this.height;
+    data['age'] = this.age;
     data['weight'] = this.weight;
     data['gender'] = this.gender;
     data['__v'] = this.iV;

@@ -13,6 +13,7 @@ void main() async{
   await PrefManager.getToken().then((String token) {
     start = token == null ? '/login' : '/home';
   });
+  start = '/home';
 
   runApp(MaterialApp(
       theme: ThemeData(

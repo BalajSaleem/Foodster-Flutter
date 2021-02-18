@@ -73,15 +73,18 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: IndexedStack(
-        children: [
-          UserPage(),
-          GroceryPage(),
-          MealPage(),
-          RecipePage(),
-          StatsPage(),
-        ],
-        index: _selectedNavIndex,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: IndexedStack(
+          children: [
+            UserPage(),
+            GroceryPage(),
+            MealPage(),
+            RecipePage(),
+            StatsPage(),
+          ],
+          index: _selectedNavIndex,
+        ),
       ),
       bottomNavigationBar: buildBottomNavigationBar(),
     );
@@ -120,7 +123,7 @@ class _HomeState extends State<Home> {
           title: Text('Grocery'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.food_bank),
+          icon: Icon(Icons.fastfood),
           title: Text('Meals'),
         ),
         BottomNavigationBarItem(
