@@ -4,13 +4,15 @@ class Meal {
   String type;
   int calories;
   List<Recipe> recipes;
+  String imgUrl;
 
-  Meal({this.name, this.type, this.calories, this.recipes});
+  Meal({this.name, this.type, this.calories, this.recipes, this.imgUrl});
 
   Meal.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     type = json['type'];
     calories = json['calories'];
+    imgUrl = json['imgUrl'];
     json['recipes'].forEach((v) { recipes.add(new Recipe.fromJson(v)); });
   }
 
@@ -19,6 +21,7 @@ class Meal {
     data['name'] = this.name;
     data['type'] = this.type;
     data['calories'] = this.calories;
+    data['imgUrl'] = this.imgUrl;
     if (this.recipes != null) {
       data['recipes'] = this.recipes.map((v) => v.toJson()).toList();
     }

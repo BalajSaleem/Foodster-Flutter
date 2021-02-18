@@ -1,9 +1,15 @@
 
 import 'package:flutter/material.dart';
+import 'package:foodster/controllers/pref_manager.dart';
+import 'package:foodster/pages/RecipePage.dart';
+import 'package:foodster/pages/StatsPage.dart';
+import 'package:foodster/pages/grocery_page.dart';
+import 'package:foodster/pages/user_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'meal_page.dart';
+import 'package:foodster/controllers/logout.dart';
 
 class Home extends StatefulWidget {
   //const Home({ this.user}) ;
@@ -15,11 +21,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   int _selectedNavIndex = 2;
-  bool canApply = true;
-  bool canViewQr = false;
+
+
   final GlobalKey<ScrollableState> globalScrollKey = new GlobalKey<ScrollableState>();
-
-
 
   // void fetchAllEvents() async{
   //   http.Response response = await http.get('$baseUrl/events/');
@@ -28,27 +32,6 @@ class _HomeState extends State<Home> {
   //     activities = (data.map((activity) => Activity.fromJson(activity))).toList();
   //   });
   // }
-
-  // void fetchRegisteredEvents() async{
-  //   http.Response response = await http.get('$baseUrl/personEvents/${widget.user.id}');
-  //   List<dynamic> data = json.decode(response.body);
-  //   setState(() {
-  //     activities = (data.map((activity) => Activity.fromJson(activity))).toList();
-  //   });
-  // }
-
-  // void fetchCreatedEvents() async{
-  //   http.Response response = await http.get('$baseUrl/officerEvents/${widget.user.id}');
-  //   List<dynamic> data = json.decode(response.body);
-  //   setState(() {
-  //     activities = (data.map((activity) => Activity.fromJson(activity))).toList();
-  //   });
-  // }
-
-
-  void viewActivityQrCode(event){
-
-  }
 
   void _showToast(BuildContext context,String message) {
     final scaffold = Scaffold.of(context);
@@ -65,31 +48,19 @@ class _HomeState extends State<Home> {
     setState(() {
       _selectedNavIndex = index;
     });
-
-
       // switch (_selectedNavIndex) {
       //   case 0:
-      //     fetchRemainingUnregisteredActivities();
-      //     canApply = true;
-      //     canViewQr = false;
       //     break;
       //   case 1:
-      //     fetchAllEvents();
-      //     setState(() {
-      //       canApply = false;
-      //       canViewQr = false;
-      //     });
       //     break;
       //   case 2:
-      //     fetchRegisteredEvents();
-      //     setState(() {
-      //       canApply = false;
-      //       canViewQr = true;
-      //     });
       //     break;
+      //   case 3:
+      //     break;
+      //   case 4:
+      //     break;
+      //
       // }
-
-
   }
 
   @override
@@ -102,7 +73,19 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: MealPage(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: IndexedStack(
+          children: [
+            UserPage(),
+            GroceryPage(),
+            MealPage(),
+            RecipePage(),
+            StatsPage(),
+          ],
+          index: _selectedNavIndex,
+        ),
+      ),
       bottomNavigationBar: buildBottomNavigationBar(),
     );
   }
@@ -116,9 +99,9 @@ class _HomeState extends State<Home> {
         Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () => logout(context), //logout here
               child: Icon(
-                Icons.settings,
+                Icons.exit_to_app,
                 size: 26.0,
               ),
             )
@@ -140,7 +123,7 @@ class _HomeState extends State<Home> {
           title: Text('Grocery'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.food_bank),
+          icon: Icon(Icons.fastfood),
           title: Text('Meals'),
         ),
         BottomNavigationBarItem(

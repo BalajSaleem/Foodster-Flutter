@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodster/pref_manager.dart';
+import 'package:foodster/controllers/pref_manager.dart';
 import 'package:foodster/pages/home_page.dart';
+import 'package:foodster/pages/user_page.dart';
+
 import 'pages/login_page.dart';
 import 'pages/register_page.dart';
 
@@ -11,6 +13,7 @@ void main() async{
   await PrefManager.getToken().then((String token) {
     start = token == null ? '/login' : '/home';
   });
+  start = '/home';
 
   runApp(MaterialApp(
       theme: ThemeData(
@@ -25,6 +28,8 @@ void main() async{
         '/login' : (context) => Login(),
         '/register' : (context) => SignUp(),
         '/home' : (context) => Home(),
+        '/user' : (context) => UserPage(),
+
       }
   )
   );

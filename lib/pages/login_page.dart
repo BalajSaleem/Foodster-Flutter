@@ -1,10 +1,10 @@
 //import 'package:exodus/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodster/RestCalls/http_caller.dart';
+import 'package:foodster/controllers/http_caller.dart';
 import 'package:foodster/components/big_button.dart';
-import 'package:foodster/pages/ui_utils.dart';
-import 'package:foodster/pref_manager.dart';
+import 'package:foodster/controllers/ui_utils.dart';
+import 'package:foodster/controllers/pref_manager.dart';
 
 //import 'package:exodus/models/Person.dart';
 import 'dart:convert';
@@ -34,7 +34,7 @@ class _LoginState extends State<Login> {
       if(success){
         print('Logging in');
         PrefManager.storeToken(token);
-        Navigator.of(context).pushNamed('/home');
+        Navigator.of(context).popAndPushNamed('/home');
       }
       else{
         UiUtils.showToast('Failed to Log In');
@@ -103,7 +103,7 @@ class _LoginState extends State<Login> {
                         Container(
                             height: 40.0,
                             child: !isLoading
-                                ? BigButton("Login", () {handleLogin(context);})
+                                ? BigButton(text: "Login", onClick: () {handleLogin(context);})
                                 : SpinKitWave(
                                     color: Colors.greenAccent,
                                     size: 30,

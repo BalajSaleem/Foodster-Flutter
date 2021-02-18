@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:foodster/Model/Meal.dart';
 
@@ -47,8 +50,10 @@ class MealCard extends StatelessWidget {
           .map((recipe) => Row(children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(26.0),
-                  child: Image.network(
-                    backupImageAddress, //replace this with recipe image
+                  child: 
+                  Image.network(
+                    //meal.imgUrl
+                    meal.imgUrl, //replace this with recipe image
                     height: 48,
                     width: 48,
                   ),
