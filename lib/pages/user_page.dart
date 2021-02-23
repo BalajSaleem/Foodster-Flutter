@@ -3,7 +3,9 @@ import 'package:foodster/Model/Ingredient.dart';
 import 'package:foodster/Model/Nutrition.dart';
 import 'package:foodster/Model/Preferences.dart';
 import 'package:foodster/Model/User.dart';
+import 'package:foodster/components/ingredient_list.dart';
 import 'package:foodster/components/preferences_card.dart';
+import 'package:foodster/components/recipe_list.dart';
 
 import '../Model/Measure.dart';
 import '../Model/Recipe.dart';
@@ -134,26 +136,40 @@ class _UserPageState extends State<UserPage> {
             ),
           ),
           Divider(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Preferences",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, ),
-                ),
-              ],
-            ),
-          ),
+          buildHeading(title: "Preferences"),
           PreferencesCard(preferences: user.preferences,),
           Divider(),
-
-
-
-
+          buildHeading(title: "Allergies"),
+          IngredientList(ingredients: user.allergies),
+          Divider(),
+          buildHeading(title: "Liked Ingredients"),
+          IngredientList(ingredients: user.likedIngredients),
+          Divider(),
+          buildHeading(title: "Disliked Ingredients"),
+          IngredientList(ingredients: user.dislikedIngredients),
+          Divider(),
+          buildHeading(title: "Liked Recipes"),
+          RecipeList(recipes: user.likedRecipes),
+          Divider(),
+          buildHeading(title: "Disliked Recipes"),
+          RecipeList(recipes: user.dislikedRecipes),
         ],
       ),
     );
+  }
+
+  Padding buildHeading({String title}) {
+    return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, ),
+              ),
+            ],
+          ),
+        );
   }
 }

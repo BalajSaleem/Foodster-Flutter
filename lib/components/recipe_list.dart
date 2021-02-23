@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:foodster/Model/Ingredient.dart';
 import 'package:foodster/Model/Meal.dart';
 import 'package:foodster/Model/Preferences.dart';
+import 'package:foodster/Model/Recipe.dart';
 
 
 //TODO: MAKE THIS STATEFUL FOR TEXT EDITING CONTROLLERS
-class IngredientList extends StatelessWidget {
-  const IngredientList({Key key, this.ingredients}) : super(key: key);
-  final List<Ingredient> ingredients;
+class RecipeList extends StatelessWidget {
+  const RecipeList({Key key, this.recipes}) : super(key: key);
+  final List<Recipe> recipes;
 
 
   @override
@@ -29,8 +30,8 @@ class IngredientList extends StatelessWidget {
 
   Column buildIngredientList() {
     return Column(
-      children: ingredients
-          .map((ingredient) => Row(
+      children: recipes
+          .map((recipe) => Row(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: [
         ClipRRect(
@@ -38,7 +39,7 @@ class IngredientList extends StatelessWidget {
           child:
           Image.network(
             //meal.imgUrl
-            ingredient.imgUrl, //replace this with ingredient image
+            recipe.imgUrl, //replace this with ingredient image
             height: 48,
             width: 48,
           ),
@@ -46,7 +47,7 @@ class IngredientList extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(
-            ingredient.name,
+            recipe.name,
             style: TextStyle(color: Colors.grey[400], fontSize: 16),
           ),
         ),
