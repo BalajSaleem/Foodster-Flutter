@@ -28,4 +28,9 @@ class Nutrition {
     data['fats'] = this.fats;
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Nutrition{base: $base, calories: $calories, carbs: $carbs, proteins: $proteins, fats: $fats}';
+  }
 }

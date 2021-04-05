@@ -1,9 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:foodster/Model/Recipe.dart';
 import 'package:foodster/controllers/pref_manager.dart';
 import 'package:foodster/pages/RecipePage.dart';
 import 'package:foodster/pages/StatsPage.dart';
 import 'package:foodster/pages/grocery_page.dart';
+import 'package:foodster/pages/recipe_choices_page.dart';
 import 'package:foodster/pages/user_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -21,6 +23,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   int _selectedNavIndex = 2;
+  bool hasInitialSelections = false;
 
 
   final GlobalKey<ScrollableState> globalScrollKey = new GlobalKey<ScrollableState>();
@@ -67,6 +70,8 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _onNavItemTapped(_selectedNavIndex);
+
+    //TODO:
   }
 
   @override
@@ -79,7 +84,7 @@ class _HomeState extends State<Home> {
           children: [
             UserPage(),
             GroceryPage(),
-            MealPage(),
+            hasInitialSelections ? MealPage() : RecipeChoicesPage(),
             RecipePage(),
             StatsPage(),
           ],
@@ -139,6 +144,15 @@ class _HomeState extends State<Home> {
       selectedItemColor: Colors.greenAccent,
       onTap: _onNavItemTapped,
     );
+  }
+
+  void addInitialRecipeSelections(List<Recipe> recipes){
+
+    setState(() {
+      hasInitialSelections = true;
+    });
+    //TODO: post the selections
+
   }
 
   Future<void> _showDialog({String title, String body}) async {

@@ -3,7 +3,9 @@ import 'package:foodster/Model/Ingredient.dart';
 import 'package:foodster/Model/Nutrition.dart';
 import 'package:foodster/Model/Preferences.dart';
 import 'package:foodster/Model/User.dart';
+import 'package:foodster/components/ingredient_list.dart';
 import 'package:foodster/components/preferences_card.dart';
+import 'package:foodster/components/recipe_list.dart';
 
 import '../Model/Measure.dart';
 import '../Model/Recipe.dart';
@@ -14,7 +16,7 @@ String onionImg = "https://images.unsplash.com/photo-1587735243474-5426387356db?
 String potatoImg = "https://images.unsplash.com/photo-1578594640334-b71fbed2a406?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80";
 String broccoliImg = "https://images.unsplash.com/photo-1518164147695-36c13dd568f5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80";
 String nutImg ="https://images.unsplash.com/photo-1594900689460-fdad3599342c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8N3x8cGVhbnV0fGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60";
-String userImg = "https://media-exp1.licdn.com/dms/image/C4D03AQG3UNJ-KeAyhA/profile-displayphoto-shrink_200_200/0/1612507017901?e=1619049600&v=beta&t=DsaVwXyhslx4aKPhB5SBZTkWQAFtAC_fe5FzlfuMdeI";
+String userImg = "https://images.unsplash.com/photo-1491308056676-205b7c9a7dc1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=753&q=80";
 String saladImg = "https://images.unsplash.com/photo-1572449043416-55f4685c9bb7?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80";
 String saladImg2= "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80";
 String saladImg3 = "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80";
@@ -90,8 +92,6 @@ class _UserPageState extends State<UserPage> {
     super.initState();
 
   }
-
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -134,26 +134,40 @@ class _UserPageState extends State<UserPage> {
             ),
           ),
           Divider(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Preferences",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, ),
-                ),
-              ],
-            ),
-          ),
+          buildHeading(title: "Preferences"),
           PreferencesCard(preferences: user.preferences,),
           Divider(),
-
-
-
-
+          buildHeading(title: "Allergies"),
+          IngredientList(ingredients: user.allergies),
+          Divider(),
+          buildHeading(title: "Liked Ingredients"),
+          IngredientList(ingredients: user.likedIngredients),
+          Divider(),
+          buildHeading(title: "Disliked Ingredients"),
+          IngredientList(ingredients: user.dislikedIngredients),
+          Divider(),
+          buildHeading(title: "Liked Recipes"),
+          RecipeList(recipes: user.likedRecipes),
+          Divider(),
+          buildHeading(title: "Disliked Recipes"),
+          RecipeList(recipes: user.dislikedRecipes),
         ],
       ),
     );
+  }
+
+  Padding buildHeading({String title}) {
+    return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, ),
+              ),
+            ],
+          ),
+        );
   }
 }
