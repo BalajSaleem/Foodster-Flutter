@@ -47,4 +47,9 @@ class Recipe {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Recipe{name: $name, difficulty: $difficulty, prepTime: $prepTime, cookTime: $cookTime, nutrition: $nutrition, estimatedPrice: $estimatedPrice,}';
+  }
 }

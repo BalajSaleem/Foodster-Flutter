@@ -31,4 +31,9 @@ class Ingredient {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Ingredient{name: $name, estimatedPrice: $estimatedPrice}';
+  }
 }
