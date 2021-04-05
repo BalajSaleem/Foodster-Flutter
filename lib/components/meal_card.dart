@@ -53,7 +53,7 @@ class MealCard extends StatelessWidget {
                   child: 
                   Image.network(
                     //meal.imgUrl
-                    meal.imgUrl, //replace this with recipe image
+                    recipe.imgUrl, //replace this with recipe image
                     height: 48,
                     width: 48,
                   ),

@@ -23,59 +23,59 @@ class _MealPageState extends State<MealPage> {
     // Meal(name: "Dinner", type: 'd', calories: 493, recipes: [ Recipe(name: "Fruit Salad"), Recipe(name: "Nuts") ] )
   ];
 
-  Future<List<Meal>> _handleMealGeneration() async {
-    var wrapper = {'statusCode': -1};
-    List<Map<String, dynamic>> list = await HttpCaller.generateMeals(await PrefManager.getToken(), wrapper);
-
-    if(list == null) {
-      // token expired, but I need to double check if 401 is the right code for that
-      if(wrapper['statusCode'] == 401){
-        print('token expired');
-        UiUtils.showToast('Your session expired!');
-        logout(context);
-      }
-      return [];
-    }
-
-    List<Meal> newMeals = [];
-
-    // What is supposed to happen here:
-    // for(Map<String, dynamic> mealJson in list){
-    //    newMeals.add(Meal.fromJson(mealJsonObject));
-    // }
-    //
-    // return newMeals;
-    // but the communication between what we needed and what we got was
-    // a bit flawed :|
-
-    // Everything behind this point should be removed after we clean the code up
-    // because it is borderline hardcoded
-
-    String link = "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80";
-    var links = [
-        "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F614043.jpg",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQXW4P9AcnF5R_b29IeXSCUFKuHbojoajrLA&usqp=CAU",
-        "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F226134.jpg"
-    ];
-
-    var dict = {
-     0 : 'breakfast',
-     1 : 'lunch',
-     2 : 'dinner',
-    };
-
-    Map<String, dynamic> json = list[0];
-    for( int i = 0; i < 3; i++){
-      newMeals.add(Meal(
-            name: UiUtils.firstLetterUppercase(dict[i]),
-            type: dict[i][0].toLowerCase(),
-            calories: json[dict[i]]['nutritions']['calories'],
-            recipes: [Recipe(name: json[dict[i]]['name'])],
-            imgUrl: links[i]
-          ));
-    }
-    return newMeals;
-  }
+//  Future<List<Meal>> _handleMealGeneration() async {
+//    var wrapper = {'statusCode': -1};
+//    List<Map<String, dynamic>> list = await HttpCaller.generateMeals(await PrefManager.getToken(), wrapper);
+//
+//    if(list == null) {
+//      // token expired, but I need to double check if 401 is the right code for that
+//      if(wrapper['statusCode'] == 401){
+//        print('token expired');
+//        UiUtils.showToast('Your session expired!');
+//        logout(context);
+//      }
+//      return [];
+//    }
+//
+//    List<Meal> newMeals = [];
+//
+//    // What is supposed to happen here:
+//    // for(Map<String, dynamic> mealJson in list){
+//    //    newMeals.add(Meal.fromJson(mealJsonObject));
+//    // }
+//    //
+//    // return newMeals;
+//    // but the communication between what we needed and what we got was
+//    // a bit flawed :|
+//
+//    // Everything behind this point should be removed after we clean the code up
+//    // because it is borderline hardcoded
+//
+//    String link = "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80";
+//    var links = [
+//        "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F614043.jpg",
+//        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQXW4P9AcnF5R_b29IeXSCUFKuHbojoajrLA&usqp=CAU",
+//        "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F226134.jpg"
+//    ];
+//
+//    var dict = {
+//     0 : 'breakfast',
+//     1 : 'lunch',
+//     2 : 'dinner',
+//    };
+//
+//    Map<String, dynamic> json = list[0];
+//    for( int i = 0; i < 3; i++){
+//      newMeals.add(Meal(
+//            name: UiUtils.firstLetterUppercase(dict[i]),
+//            type: dict[i][0].toLowerCase(),
+//            calories: json[dict[i]]['nutritions']['calories'],
+//            recipes: [Recipe(name: json[dict[i]]['name'])],
+//            imgUrl: links[i]
+//          ));
+//    }
+//    return newMeals;
+//  }
 
   @override
   Widget build(BuildContext context) {

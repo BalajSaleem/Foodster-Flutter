@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
           children: [
             UserPage(),
             GroceryPage(),
-            hasInitialSelections ? MealPage() : RecipeChoicesPage(),
+            hasInitialSelections ? MealPage() : RecipeChoicesPage(onRecipesSelected: onInitialRecipesSelected, ),
             RecipePage(),
             StatsPage(),
           ],
@@ -146,7 +146,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void addInitialRecipeSelections(List<Recipe> recipes){
+  void onInitialRecipesSelected(List<Recipe> recipes){
 
     setState(() {
       hasInitialSelections = true;
