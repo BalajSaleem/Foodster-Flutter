@@ -15,4 +15,9 @@ class Measure {
     data['amount'] = this.mag;
     return data;
   }
+
+  @override
+  String toString() {
+    return '$mag $unit';
+  }
 }

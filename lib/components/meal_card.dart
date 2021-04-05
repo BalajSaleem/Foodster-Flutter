@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:foodster/Model/Meal.dart';
 
@@ -16,7 +13,8 @@ class MealCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
@@ -25,14 +23,17 @@ class MealCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(4),
                 child: Text(
-                  meal.name,
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, ),
+                  meal.label,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(4),
-                child: Text("Calories: ${meal.calories}", style: TextStyle(fontSize: 14, color: Colors.grey[300])),
-              ),
+//              Padding(
+//                padding: const EdgeInsets.all(4),
+//                child: Text("Calories: ${meal.calories}", style: TextStyle(fontSize: 14, color: Colors.grey[300])),
+//              ),
               Divider(
                 color: Colors.grey,
               ),
@@ -46,23 +47,41 @@ class MealCard extends StatelessWidget {
 
   Column buildRecipeList() {
     return Column(
-      children: meal.recipes
-          .map((recipe) => Row(children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(26.0),
-                  child: 
-                  Image.network(
-                    //meal.imgUrl
-                    recipe.imgUrl, //replace this with recipe image
-                    height: 48,
-                    width: 48,
+      children: meal.servings
+          .map((serving) => Row(children: [
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(26.0),
+                    child: Image.network(
+                      //meal.imgUrl
+                      serving.recipe.imgUrl, //replace this with recipe image
+                      height: 48,
+                      width: 48,
+                    ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(4.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    recipe.name,
+                    serving.recipe.name,
                     style: TextStyle(color: Colors.grey[400], fontSize: 16),
+                  ),
+                ),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "${serving.recipe.nutrition.calories} KCal",
+                    style: TextStyle(color: Colors.grey[400], fontSize: 14),
+                  ),
+                ),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    serving.measure.toString(),
+                    style: TextStyle(color: Colors.grey[400], fontSize: 14),
                   ),
                 ),
               ]))
