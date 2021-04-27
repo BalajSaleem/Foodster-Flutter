@@ -15,4 +15,8 @@ class  UiUtils {
     String dateSlug ="${today.year.toString()}-${today.month.toString().padLeft(2,'0')}-${today.day.toString().padLeft(2,'0')}";
     return dateSlug;
   }
+  
+  static String replaceSpaces(String str){
+    return str.replaceAll(" ", "%20");
+  }
 }
