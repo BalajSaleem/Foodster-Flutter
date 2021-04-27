@@ -1,19 +1,24 @@
+import 'package:foodster/Model/Serving.dart';
+
 import 'Recipe.dart';
 class Meal {
   String name;
   String type;
   int calories;
-  List<Recipe> recipes;
+  List<Serving> servings;
   String imgUrl;
 
-  Meal({this.name, this.type, this.calories, this.recipes, this.imgUrl});
+  Meal({this.name, this.type, this.calories, this.servings, this.imgUrl});
 
   Meal.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     type = json['type'];
     calories = json['calories'];
     imgUrl = json['imgUrl'];
-    json['recipes'].forEach((v) { recipes.add(new Recipe.fromJson(v)); });
+    if (json['servings'] != null) {
+      servings = new List<Serving>();
+      json['servings'].forEach((v) { servings.add(new Serving.fromJson(v)); });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -22,8 +27,8 @@ class Meal {
     data['type'] = this.type;
     data['calories'] = this.calories;
     data['imgUrl'] = this.imgUrl;
-    if (this.recipes != null) {
-      data['recipes'] = this.recipes.map((v) => v.toJson()).toList();
+    if (this.servings != null) {
+      data['recipes'] = this.servings.map((v) => v.toJson()).toList();
     }
     return data;
   }

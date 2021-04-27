@@ -1,3 +1,4 @@
+import 'package:foodster/Model/MealPlan.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -50,4 +51,12 @@ class HttpCaller {
       callback(false, -1);
     });
   }
+
+  static Future<MealPlan> fetchMeals() async{
+     http.Response response = await http.get('$_baseUrl/meals/generate');
+     MealPlan data = MealPlan.fromJson(json.decode(response.body));
+     return data;
+  }
+
+
 }

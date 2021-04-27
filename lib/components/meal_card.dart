@@ -29,10 +29,10 @@ class MealCard extends StatelessWidget {
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(4),
-                child: Text("Calories: ${meal.calories}", style: TextStyle(fontSize: 14, color: Colors.grey[300])),
-              ),
+//              Padding(
+//                padding: const EdgeInsets.all(4),
+//                child: Text("Calories: ${meal.calories}", style: TextStyle(fontSize: 14, color: Colors.grey[300])),
+//              ),
               Divider(
                 color: Colors.grey,
               ),
@@ -46,24 +46,32 @@ class MealCard extends StatelessWidget {
 
   Column buildRecipeList() {
     return Column(
-      children: meal.recipes
-          .map((recipe) => Row(children: [
+      children: meal.servings
+          .map((serving) => Row(children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(26.0),
                   child: 
                   Image.network(
                     //meal.imgUrl
-                    meal.imgUrl, //replace this with recipe image
+                    serving.recipe.imgUrl, //replace this with recipe image
                     height: 48,
                     width: 48,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text(
-                    recipe.name,
-                    style: TextStyle(color: Colors.grey[400], fontSize: 16),
-                  ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        serving.recipe.name,
+                        style: TextStyle(color: Colors.grey[400], fontSize: 16),
+                      ),
+                    ),
+                    Text(
+                      "${(serving.recipe.nutrition.calories.mag)} ${(serving.recipe.nutrition.calories.unit)}",
+                      style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                    ),
+                  ],
                 ),
               ]))
           .toList(),

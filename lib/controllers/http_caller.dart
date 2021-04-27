@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'package:foodster/Model/MealPlan.dart';
 import 'package:http/http.dart' as http;
+
+import '../pref_manager.dart';
 
 class HttpCaller {
   static const String _baseUrl = "https://foodster-cs491.herokuapp.com";
@@ -94,6 +97,17 @@ class HttpCaller {
 
     statusCodeWrapper['statusCode'] = response.statusCode;
     return list;
+  }
+
+
+  static Future<MealPlan> fetchMealPlan() async{
+    http.Response response = await http.post('$_baseUrl/meals/generate', body: { },
+      headers: {
+      'Authorization' : 'Bearer ${await PrefManager.getToken()}',
+    },);
+    print(response.body);
+    MealPlan data = MealPlan.fromJson(json.decode(response.body));
+    return data;
   }
 }
 

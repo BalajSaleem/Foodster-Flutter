@@ -16,7 +16,7 @@ String onionImg = "https://images.unsplash.com/photo-1587735243474-5426387356db?
 String potatoImg = "https://images.unsplash.com/photo-1578594640334-b71fbed2a406?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80";
 String broccoliImg = "https://images.unsplash.com/photo-1518164147695-36c13dd568f5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80";
 String nutImg ="https://images.unsplash.com/photo-1594900689460-fdad3599342c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8N3x8cGVhbnV0fGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60";
-String userImg = "https://images.unsplash.com/photo-1491308056676-205b7c9a7dc1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=753&q=80";
+String userImg = "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1268&q=80";
 String saladImg = "https://images.unsplash.com/photo-1572449043416-55f4685c9bb7?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80";
 String saladImg2= "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80";
 String saladImg3 = "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80";
@@ -50,9 +50,9 @@ Preferences prefs = Preferences(
   restrictions: allergies,
 );
 
-Nutrition nutrition1 = Nutrition(base: Measure(unit:"gr", mag: 20), calories: 500, carbs: 99, proteins: 20, fats: 15);
-Nutrition nutrition2 = Nutrition(base: Measure(unit:"gr", mag: 40), calories: 897, carbs: 123, proteins: 45, fats: 26);
-Nutrition nutrition3 = Nutrition(base: Measure(unit:"gr", mag: 60), calories: 200, carbs: 36, proteins: 18, fats: 13);
+Nutrition nutrition1 = Nutrition(calories: Measure(unit:"gr", mag: 20), carbs: Measure(unit:"gr", mag: 20), proteins: Measure(unit:"gr", mag: 20), fats: Measure(unit:"gr", mag: 20));
+Nutrition nutrition2 = Nutrition(calories: Measure(unit:"gr", mag: 20), carbs: Measure(unit:"gr", mag: 20), proteins: Measure(unit:"gr", mag: 20), fats: Measure(unit:"gr", mag: 20));
+Nutrition nutrition3 = Nutrition(calories: Measure(unit:"gr", mag: 20), carbs: Measure(unit:"gr", mag: 20), proteins: Measure(unit:"gr", mag: 20), fats: Measure(unit:"gr", mag: 20));
 
 List<Recipe> likedRecipe = [
   Recipe(name: 'Tomato Salad', difficulty: 'EASY', prepTime: 20, cookTime: 5,
@@ -108,6 +108,7 @@ class _UserPageState extends State<UserPage> {
                   user.imgUrl, //replace this with recipe image
                   height: 128,
                   width: 128,
+                  fit: BoxFit.fill ,
                 ),
               ),
             ],

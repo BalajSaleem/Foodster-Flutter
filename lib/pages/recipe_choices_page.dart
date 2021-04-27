@@ -33,9 +33,9 @@ List<Ingredient> allergies = [
   Ingredient(name: 'Kaju', imgUrl: nutImg ),
 ];
 
-Nutrition nutrition1 = Nutrition(base: Measure(unit:"gr", mag: 20), calories: 500, carbs: 99, proteins: 20, fats: 15);
-Nutrition nutrition2 = Nutrition(base: Measure(unit:"gr", mag: 40), calories: 897, carbs: 123, proteins: 45, fats: 26);
-Nutrition nutrition3 = Nutrition(base: Measure(unit:"gr", mag: 60), calories: 200, carbs: 36, proteins: 18, fats: 13);
+Nutrition nutrition1 = Nutrition(calories: Measure(unit:"gr", mag: 20), carbs: Measure(unit:"gr", mag: 20), proteins: Measure(unit:"gr", mag: 20), fats: Measure(unit:"gr", mag: 20));
+Nutrition nutrition2 = Nutrition(calories: Measure(unit:"gr", mag: 20), carbs: Measure(unit:"gr", mag: 20), proteins: Measure(unit:"gr", mag: 20), fats: Measure(unit:"gr", mag: 20));
+Nutrition nutrition3 = Nutrition(calories: Measure(unit:"gr", mag: 20), carbs: Measure(unit:"gr", mag: 20), proteins: Measure(unit:"gr", mag: 20), fats: Measure(unit:"gr", mag: 20));
 
 
 class RecipeChoicesPage extends StatefulWidget {
@@ -120,12 +120,12 @@ class _RecipeChoicesPageState extends State<RecipeChoicesPage> {
   }
 
   void updateCheckedRecipes(Recipe recipe, bool add){
-    print("recipeListUpdated");
+    //print("recipeListUpdated");
 
     setState(() {
       add ? checkedRecipes.add(recipe) : checkedRecipes.remove(recipe) ;
     }) ;
-    print(checkedRecipes);
+    //print(checkedRecipes);
   }
 
 }
