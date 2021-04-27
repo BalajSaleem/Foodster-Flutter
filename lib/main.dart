@@ -14,7 +14,7 @@ void main() async{
   await PrefManager.getToken().then((String token) {
     start = token == null ? '/login' : '/home';
   });
-  start = '/home'; //TODO: REMOVE AT PRODUCTION!
+  //start = '/home'; //TODO: REMOVE AT PRODUCTION!
 
   runApp(MaterialApp(
       theme: ThemeData(

@@ -10,4 +10,9 @@ class  UiUtils {
       return s;
     return '${s[0].toUpperCase()}${s.substring(1).toLowerCase()}';
   }
+
+  static String dateToString(DateTime today){
+    String dateSlug ="${today.year.toString()}-${today.month.toString().padLeft(2,'0')}-${today.day.toString().padLeft(2,'0')}";
+    return dateSlug;
+  }
 }

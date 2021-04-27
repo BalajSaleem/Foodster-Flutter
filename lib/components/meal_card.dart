@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:foodster/Model/Meal.dart';
+import 'package:foodster/controllers/ui_utils.dart';
 
 class MealCard extends StatelessWidget {
   const MealCard({Key key, this.meal}) : super(key: key);
@@ -59,17 +60,30 @@ class MealCard extends StatelessWidget {
                   ),
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        serving.recipe.name,
-                        style: TextStyle(color: Colors.grey[400], fontSize: 16),
+                        serving.recipe.name.trim(),
+                        style: TextStyle(color: Colors.grey[400], fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                     ),
-                    Text(
-                      "${(serving.recipe.nutrition.calories.mag)} ${(serving.recipe.nutrition.calories.unit)}",
-                      style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "${UiUtils.firstLetterUppercase(serving.recipe.nutrition.calories.unit)}:  ${(serving.recipe.nutrition.calories.mag)} ".trim(),
+                            style: TextStyle(color: Colors.grey[400], fontSize: 14, fontWeight: FontWeight.w300),
+                          ),
+                          SizedBox(width: 30,),
+                          Text(
+                            "Cook Time: ${(serving.recipe.cookTime)} min".trim(),
+                            style: TextStyle(color: Colors.grey[400], fontSize: 14, fontWeight: FontWeight.w300),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

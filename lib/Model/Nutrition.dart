@@ -11,9 +11,9 @@ class Nutrition {
 
   Nutrition.fromJson(Map<String, dynamic> json) {
     calories = json['calories'] != null ? new Measure.fromJson(json['calories']) : null;
-    calories = json['carbs'] != null ? new Measure.fromJson(json['carbs']) : null;
-    calories = json['proteins'] != null ? new Measure.fromJson(json['proteins']) : null;
-    calories = json['fats'] != null ? new Measure.fromJson(json['fats']) : null;
+    carbs = json['carbs'] != null ? new Measure.fromJson(json['carbs']) : null;
+    proteins = json['proteins'] != null ? new Measure.fromJson(json['proteins']) : null;
+    fats = json['fats'] != null ? new Measure.fromJson(json['fats']) : null;
 
 
   }
