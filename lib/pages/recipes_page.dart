@@ -9,7 +9,12 @@ class _RecipePageState extends State<RecipePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(child: Text("RECIPES HERE!"))
+      child: Center(
+          child: Text("RECIPES HERE!")
+
+
+
+      )
     );
   }
 }

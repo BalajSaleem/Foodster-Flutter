@@ -42,7 +42,6 @@ class _RecipeCardState extends State<RecipeCard> {
                   isChecked = !isChecked;
                 });
                 widget.onCardSelected(widget.recipe, isChecked);
-
               },
               child: Container(
                 width: 256,

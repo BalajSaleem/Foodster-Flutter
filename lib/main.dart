@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:foodster/controllers/pref_manager.dart';
 import 'package:foodster/pages/home_page.dart';
 import 'package:foodster/pages/recipe_choices_page.dart';
+import 'package:foodster/pages/recipe_details_page.dart';
 import 'package:foodster/pages/user_page.dart';
 
 import 'pages/login_page.dart';
@@ -31,6 +32,7 @@ void main() async{
         '/home' : (context) => Home(),
         '/user' : (context) => UserPage(),
         '/chooseRecipes' : (context) => RecipeChoicesPage(),
+        '/recipeDetails' : (context) => RecipeDetailsPage(),
 
       }
   )

@@ -39,7 +39,7 @@ class _MealPageState extends State<MealPage> {
   }
 
   void setMeals(DateTime date) {
-    bool found =false;
+    bool found = false;
     mealPlan.plan.forEach((mealDay) {
       if (mealDay.date.day.compareTo(date.day) == 0) {
         //print("found a mealday for : ${mealDay.date}");
@@ -50,7 +50,7 @@ class _MealPageState extends State<MealPage> {
         found = true;
       }
     });
-    if(!found)
+    if (!found)
       UiUtils.showToast(
           "Meal Day for ${UiUtils.dateToString(date)} could not be found");
   }

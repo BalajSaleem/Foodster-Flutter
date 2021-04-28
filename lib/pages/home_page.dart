@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodster/Model/Recipe.dart';
 import 'package:foodster/controllers/pref_manager.dart';
-import 'package:foodster/pages/RecipePage.dart';
+import 'package:foodster/pages/recipes_page.dart';
 import 'package:foodster/pages/StatsPage.dart';
 import 'package:foodster/pages/grocery_page.dart';
 import 'package:foodster/pages/recipe_choices_page.dart';
@@ -23,7 +23,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   int _selectedNavIndex = 2;
-  bool hasInitialSelections = false;
+  bool hasInitialSelections = true; //TODO: change to false on start
 
 
   final GlobalKey<ScrollableState> globalScrollKey = new GlobalKey<ScrollableState>();

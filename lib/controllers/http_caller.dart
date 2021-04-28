@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:foodster/Model/MealPlan.dart';
+import 'package:foodster/Model/Recipe.dart';
 import 'package:foodster/controllers/ui_utils.dart';
 import 'package:http/http.dart' as http;
 
@@ -112,14 +113,23 @@ class HttpCaller {
   }
 
   static Future<String> likeRecipe(String recipeName) async{
-//    recipeName = UiUtils.replaceSpaces(recipeName);
-//    print(recipeName);
     http.Response response = await http.post('$_baseUrl/recipes/like/$recipeName', body: { },
       headers: {
         'Authorization' : 'Bearer ${await PrefManager.getToken()}',
       },);
     print("Like Recipe Status: ${response.statusCode}");
     String data = response.body;
+    return data;
+  }
+
+  static Future<Recipe> fetchRecipe(String recipeName) async{
+    http.Response response = await http.get('$_baseUrl/recipes/$recipeName',
+      headers: {
+        'Authorization' : 'Bearer ${await PrefManager.getToken()}',
+      },);
+    print("Fetch Recipe Status: ${response.statusCode}");
+    print(response.body);
+    Recipe data = Recipe.fromJson(json.decode(response.body));
     return data;
   }
 

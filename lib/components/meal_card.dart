@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:foodster/Model/Meal.dart';
 import 'package:foodster/controllers/http_caller.dart';
 import 'package:foodster/controllers/ui_utils.dart';
+import 'package:foodster/pages/recipe_details_page.dart';
 
 class MealCard extends StatefulWidget {
   const MealCard({Key key, this.meal}) : super(key: key);
@@ -69,8 +70,13 @@ class _MealCardState extends State<MealCard> {
     return Column(
       children: widget.meal.servings
           .map((serving) => InkWell(
-        onTap: () {},
-            child: Row(children: [
+                onTap: () {
+                  //navigate to recipe details
+                  //Navigator.of(context).push()  RecipeDetailsPage(serving.recipe) );
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => RecipeDetailsPage(recipe: serving.recipe)));
+                  //Navigator.of(context).pushNamed('/recipeDetails', arguments: serving.recipe);
+                },
+                child: Row(children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(26.0),
                     child: Image.network(
@@ -97,9 +103,12 @@ class _MealCardState extends State<MealCard> {
                             IconButton(
                                 icon: Icon(
                                   Icons.thumb_up,
-                                  color: likedRecipes.contains(serving.recipe.name) ? Colors.greenAccent : Colors.grey,
+                                  color:
+                                      likedRecipes.contains(serving.recipe.name)
+                                          ? Colors.greenAccent
+                                          : Colors.grey,
                                 ),
-                                onPressed: () async{
+                                onPressed: () async {
                                   likeRecipe(serving.recipe.name);
                                 })
                           ],
@@ -134,7 +143,7 @@ class _MealCardState extends State<MealCard> {
                     ],
                   ),
                 ]),
-          ))
+              ))
           .toList(),
     );
   }
