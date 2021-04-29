@@ -1,4 +1,6 @@
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foodster/Model/Recipe.dart';
+import 'package:foodster/Model/Serving.dart';
 
 class  UiUtils {
   static void showToast(String msg){
@@ -19,4 +21,5 @@ class  UiUtils {
   static String replaceSpaces(String str){
     return str.replaceAll(" ", "%20");
   }
+
 }

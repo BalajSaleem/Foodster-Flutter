@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:foodster/Model/Meal.dart';
 import 'package:foodster/Model/MealPlan.dart';
 import 'package:foodster/Model/Recipe.dart';
+import 'package:foodster/Model/Serving.dart';
 import 'package:foodster/controllers/ui_utils.dart';
 import 'package:http/http.dart' as http;
 
@@ -128,9 +130,24 @@ class HttpCaller {
         'Authorization' : 'Bearer ${await PrefManager.getToken()}',
       },);
     print("Fetch Recipe Status: ${response.statusCode}");
-    print(response.body);
+    //print(response.body);
     Recipe data = Recipe.fromJson(json.decode(response.body));
     return data;
+  }
+
+  static Future<Meal> fetchTopRecipesMeal(int n) async{
+    http.Response response = await http.get('$_baseUrl/recipes/top/$n',
+      headers: {
+        'Authorization' : 'Bearer ${await PrefManager.getToken()}',
+      },);
+    print("Fetch Top Recipes Status: ${response.statusCode}");
+    List<Serving> servings = [];
+    List<dynamic> data = json.decode(response.body);
+    servings = (data.map((recipe) =>  Recipe.fromJson(recipe).toServing())).toList();
+    //print(response.body);
+    Meal meal = new Meal(name: "Top $n Recipes", servings:  servings);
+
+    return meal;
   }
 
 

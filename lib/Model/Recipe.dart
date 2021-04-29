@@ -1,6 +1,7 @@
 import 'package:foodster/Model/Nutrition.dart';
 
 import 'Ingredient.dart';
+import 'Serving.dart';
 
 class Recipe {
   String name;
@@ -51,5 +52,9 @@ class Recipe {
   @override
   String toString() {
     return 'Recipe{name: $name, difficulty: $difficulty, prepTime: $prepTime, cookTime: $cookTime, nutrition: $nutrition, estimatedPrice: $estimatedPrice,}';
+  }
+
+  Serving toServing(){
+    return Serving(recipe: this, measure: null);
   }
 }
