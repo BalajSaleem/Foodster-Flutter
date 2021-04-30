@@ -1,5 +1,26 @@
 import 'package:foodster/Model/Ingredient.dart';
 
+
+//"diets": [
+//"vegan",
+//"paleo",
+//"keto",
+//"vegetarian"
+//]
+
+//ALERGIES
+//"milk",
+//"egg",
+//"peanuts",
+//"cashews",
+//"wheat",
+//"soy",
+//"fish",
+//"nuts"
+
+
+
+
 class Preferences {
   List<int> calRange;
   List<int> fatRange;
@@ -8,20 +29,18 @@ class Preferences {
   List<int> costRange;
   String dietType;
   String difficulty;
-  List<int> cookingTime;
   List<Ingredient> restrictions;
 
-  Preferences({this.calRange, this.fatRange, this.carbRange, this.protRange, this.costRange, this.dietType, this.difficulty, this.cookingTime, this.restrictions});
+  Preferences({this.calRange, this.fatRange, this.carbRange, this.protRange, this.costRange, this.dietType, this.difficulty, this.restrictions});
 
   Preferences.fromJson(Map<String, dynamic> json) {
-    calRange = json['calRange'].cast<int>();
-    fatRange = json['fatRange'].cast<int>();
-    carbRange = json['carbRange'].cast<int>();
-    protRange = json['protRange'].cast<int>();
-    costRange = json['costRange'].cast<int>();
+    calRange = json['calRange']!= null ? json['calRange'].cast<int>() : [];
+    fatRange = json['fatRange']!= null ? json['fatRange'].cast<int>() : [];
+    carbRange = json['carbRange']!= null ? json['carbRange'].cast<int>() : [];
+    protRange = json['protRange']!= null ? json['protRange'].cast<int>() : [];
+    costRange = json['costRange']!= null ? json['costRange'].cast<int>() : [];
     dietType = json['dietType'];
     difficulty = json['difficulty'];
-    cookingTime = json['cookingTime'].cast<int>();
     if (json['restrictions'] != null) {
       restrictions = new List<Ingredient>();
       json['restrictions'].forEach((v) { restrictions.add(new Ingredient.fromJson(v)); });
@@ -35,12 +54,27 @@ class Preferences {
     data['carbRange'] = this.carbRange;
     data['protRange'] = this.protRange;
     data['costRange'] = this.costRange;
-    data['dietType'] = this.dietType;
-    data['difficulty'] = this.difficulty;
-    data['cookingTime'] = this.cookingTime;
+    if (this.dietType != null)
+      data['dietType'] = this.dietType;
+    if (this.difficulty != null)
+      data['difficulty'] = this.difficulty;
     if (this.restrictions != null) {
       data['restrictions'] = this.restrictions.map((v) => v.toJson()).toList();
     }
     return data;
   }
+
+
+  @override
+  String toString() {
+    return 'Preferences{calRange: $calRange, fatRange: $fatRange, carbRange: $carbRange, protRange: $protRange, costRange: $costRange, dietType: $dietType}';
+  }
+
+  Map<String, dynamic> toUserJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['preferences'] = toJson();
+    return data;
+  }
+
+
 }

@@ -67,6 +67,9 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            buildHeading(title: "Nutrition"),
+            Divider(),
+            buildNutrition(),
             buildHeading(title: "Ingredients"),
             Divider(),
             buildIngredientsPanel(),
@@ -79,6 +82,55 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
     );
   }
 
+  Widget buildNutrition(){
+    return Container(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text( "Energy", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, letterSpacing: 1),),
+                Text( "${recipe.nutrition.calories.mag} ${ (recipe.nutrition.calories.unit)}", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, letterSpacing: 1),)
+            ]
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text( "Carbohydrates", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, letterSpacing: 1),),
+                  Text( "${recipe.nutrition.carbs.mag} ${ (recipe.nutrition.carbs.unit)}", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, letterSpacing: 1),)
+                ]
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text( "Fats", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, letterSpacing: 1),),
+                  Text( "${recipe.nutrition.fats.mag} ${ (recipe.nutrition.fats.unit)}", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, letterSpacing: 1),)
+                ]
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text( "Proteins", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, letterSpacing: 1),),
+                  Text( "${recipe.nutrition.proteins.mag} ${ (recipe.nutrition.proteins.unit)}", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, letterSpacing: 1),)
+                ]
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
   Widget buildIngredientsPanel() {
     List<ExpansionPanel> panels = [];
     int panelIndex = 0;

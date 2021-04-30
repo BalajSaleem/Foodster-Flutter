@@ -22,7 +22,7 @@ class _MealPageState extends State<MealPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchMeals();
+    //fetchMeals();
     //fetch the meals
   }
 

@@ -3,9 +3,12 @@ import 'package:foodster/Model/Ingredient.dart';
 import 'package:foodster/Model/Nutrition.dart';
 import 'package:foodster/Model/Preferences.dart';
 import 'package:foodster/Model/User.dart';
+import 'package:foodster/components/big_button.dart';
+import 'package:foodster/components/busy_spinkit.dart';
 import 'package:foodster/components/ingredient_list.dart';
 import 'package:foodster/components/preferences_card.dart';
 import 'package:foodster/components/recipe_list.dart';
+import 'package:foodster/controllers/http_caller.dart';
 
 import '../Model/Measure.dart';
 import '../Model/Recipe.dart';
@@ -46,7 +49,6 @@ Preferences prefs = Preferences(
   costRange: [100,200],
   dietType: 'Keto',
   difficulty: 'Easy',
-  cookingTime: [10,15],
   restrictions: allergies,
 );
 
@@ -81,79 +83,109 @@ class _UserPageState extends State<UserPage> {
 
   User user = User(sId: '1238', name: "Balaj", surname: "Saleem", email: 'balaj@balaj.com',
     password: 'zxcqwer', age: 22, gender: 'Male', height: 174, weight: 66, iV: 1, token: 'zxc5468we',
-    imgUrl: userImg, preferences: prefs, allergies: allergies, likedIngredients: likedIngs, dislikedIngredients: dislikedIngs,
+    imgUrl: userImg, preferences: prefs, allergies: [], likedIngredients: likedIngs, dislikedIngredients: dislikedIngs,
     likedRecipes: likedRecipe, dislikedRecipes: dislikedRecipe
     );
+  
+  bool isLoading = true;
 
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    fetchUser();
 
   }
+  
+  void fetchUser() async {
+    
+    User tempUser = await HttpCaller.fetchUser();
+    List<Recipe> likedRecipes = await HttpCaller.fetchLikedRecipes();
+    tempUser.height = tempUser.height == null ? 180: tempUser.height;
+    tempUser.weight = tempUser.weight == null ? 60: tempUser.weight;
+    tempUser.gender = tempUser.gender == null ? 'unspecified': tempUser.gender;
+    tempUser.preferences.costRange = tempUser.preferences.costRange.isEmpty ? [0,0] : tempUser.preferences.costRange;
+    tempUser.preferences.calRange = tempUser.preferences.calRange.isEmpty ? [0,0] : tempUser.preferences.calRange;
+    tempUser.preferences.fatRange = tempUser.preferences.fatRange.isEmpty ? [0,0] : tempUser.preferences.fatRange;
+    tempUser.preferences.carbRange = tempUser.preferences.carbRange.isEmpty ? [0,0] : tempUser.preferences.carbRange;
+    tempUser.preferences.protRange = tempUser.preferences.protRange.isEmpty ? [0,0] : tempUser.preferences.protRange;
+    tempUser.likedRecipes = likedRecipes;
+    setState(() {
+      user = tempUser;
+      isLoading = false;
+    });
+
+  }
+
+
+  
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(64.0),
-                child:
-                Image.network(
-                  //meal.imgUrl
-                  user.imgUrl, //replace this with recipe image
-                  height: 128,
-                  width: 128,
-                  fit: BoxFit.fill ,
-                ),
+      child: !isLoading ?  buildContent() : Loader(),
+    );
+  }
+
+  Column buildContent() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(64.0),
+              child:
+              Image.network(
+                //meal.imgUrl
+                userImg, //replace this with recipe image
+                height: 128,
+                width: 128,
+                fit: BoxFit.fill ,
               ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Text(
-              "${user.name} ${user.surname}",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400, ),
             ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: Text(
+            "${user.name} ${user.surname}",
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400, ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Text(
-              "${user.email}",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, ),
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 4.0),
+          child: Text(
+            "${user.email}",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Text(
-              "${user.gender} of ${user.age} years, ${user.weight} Kgs and ${user.height} cm",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w200, ),
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Text(
+            "${user.gender} of ${user.age} years, ${user.weight} Kgs and ${user.height} cm",
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w200, ),
           ),
-          Divider(),
-          buildHeading(title: "Preferences"),
-          PreferencesCard(preferences: user.preferences,),
-          Divider(),
-          buildHeading(title: "Allergies"),
-          IngredientList(ingredients: user.allergies),
-          Divider(),
-          buildHeading(title: "Liked Ingredients"),
-          IngredientList(ingredients: user.likedIngredients),
-          Divider(),
-          buildHeading(title: "Disliked Ingredients"),
-          IngredientList(ingredients: user.dislikedIngredients),
-          Divider(),
-          buildHeading(title: "Liked Recipes"),
-          RecipeList(recipes: user.likedRecipes),
-          Divider(),
-          buildHeading(title: "Disliked Recipes"),
-          RecipeList(recipes: user.dislikedRecipes),
-        ],
-      ),
+        ),
+        Divider(),
+        buildHeading(title: "Preferences"),
+        PreferencesCard(preferences: user.preferences,),
+        Divider(),
+        buildHeading(title: "Allergies"),
+        IngredientList(ingredients: user.allergies.map((e) => Ingredient(name:e)).toList()),
+        Divider(),
+//        buildHeading(title: "Liked Ingredients"),
+//        IngredientList(ingredients: user.likedIngredients),
+//        Divider(),
+//        buildHeading(title: "Disliked Ingredients"),
+//        IngredientList(ingredients: user.dislikedIngredients),
+//        Divider(),
+        buildHeading(title: "Liked Recipes"),
+        RecipeList(recipes: user.likedRecipes),
+        Divider(),
+//        buildHeading(title: "Disliked Recipes"),
+//        RecipeList(recipes: user.dislikedRecipes),
+      ],
     );
   }
 

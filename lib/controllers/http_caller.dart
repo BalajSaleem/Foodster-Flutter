@@ -3,6 +3,7 @@ import 'package:foodster/Model/Meal.dart';
 import 'package:foodster/Model/MealPlan.dart';
 import 'package:foodster/Model/Recipe.dart';
 import 'package:foodster/Model/Serving.dart';
+import 'package:foodster/Model/User.dart';
 import 'package:foodster/controllers/ui_utils.dart';
 import 'package:http/http.dart' as http;
 
@@ -125,6 +126,7 @@ class HttpCaller {
   }
 
   static Future<Recipe> fetchRecipe(String recipeName) async{
+    print("fetching a $recipeName details");
     http.Response response = await http.get('$_baseUrl/recipes/$recipeName',
       headers: {
         'Authorization' : 'Bearer ${await PrefManager.getToken()}',
@@ -136,6 +138,7 @@ class HttpCaller {
   }
 
   static Future<Meal> fetchTopRecipesMeal(int n) async{
+    print("fetching top recipes");
     http.Response response = await http.get('$_baseUrl/recipes/top/$n',
       headers: {
         'Authorization' : 'Bearer ${await PrefManager.getToken()}',
@@ -146,9 +149,51 @@ class HttpCaller {
     servings = (data.map((recipe) =>  Recipe.fromJson(recipe).toServing())).toList();
     //print(response.body);
     Meal meal = new Meal(name: "Top $n Recipes", servings:  servings);
-
     return meal;
   }
+
+  static Future<User> fetchUser() async{
+    print("fetching user");
+    http.Response response = await http.get('$_baseUrl/users/',
+      headers: {
+        'Authorization' : 'Bearer ${await PrefManager.getToken()}',
+      },);
+    print("Fetch User Status: ${response.statusCode}");
+    //print(response.body);
+    User user = User.fromJson(json.decode(response.body));
+    return user;
+  }
+
+  static Future<List<Recipe>> fetchLikedRecipes() async{
+    print("fetching user liked recipes");
+    http.Response response = await http.get('$_baseUrl/users/liked_recipes',
+      headers: {
+        'Authorization' : 'Bearer ${await PrefManager.getToken()}',
+      },);
+    print("Fetch Liked Recipes Status: ${response.statusCode}");
+    //print(response.body);
+    List<Recipe> recipes = [];
+    List<dynamic> data = json.decode(response.body);
+    recipes = (data.map((recipe) =>  Recipe.fromJson(recipe))).toList();
+    return recipes;
+  }
+
+  static Future<User> updateUser(Map<String, dynamic> userJson) async{
+    print("updating user $userJson" );
+    http.Response response = await http.patch('$_baseUrl/users/', body: json.encode(userJson) ,
+      headers: {
+        'Authorization' : 'Bearer ${await PrefManager.getToken()}',
+        'content-type' : 'application/json'
+      },);
+    print("Update user Status: ${response.statusCode}");
+    User user = User.fromJson(json.decode(response.body));
+    print(user.preferences);
+    return user;
+  }
+
+
+
+
 
 
 }
