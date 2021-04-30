@@ -51,7 +51,6 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
     data['email'] = this.email;
     data['name'] = this.name;
     data['surname'] = this.surname;
@@ -60,31 +59,27 @@ class User {
     data['age'] = this.age;
     data['weight'] = this.weight;
     data['gender'] = this.gender;
-    data['__v'] = this.iV;
-    data['token'] = this.token;
     data['imgUrl'] = this.imgUrl;
 
     if (this.preferences != null) {
       data['preferences'] = this.preferences.toJson();
     }
 
-      data['allergies'] = this.allergies;
+    data['allergies'] = this.allergies;
 
     if (this.likedRecipes != null) {
       data['likedRecipes'] = this.likedRecipes.map((v) => v.toJson()).toList();
-    }
-
-    if (this.dislikedRecipes != null) {
-      data['dislikedRecipes'] = this.dislikedRecipes.map((v) => v.toJson()).toList();
     }
 
     if (this.likedIngredients != null) {
       data['likedIngredients'] = this.likedIngredients.map((v) => v.toJson()).toList();
     }
 
-    if (this.dislikedIngredients != null) {
-      data['dislikedIngredients'] = this.dislikedIngredients.map((v) => v.toJson()).toList();
-    }
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'User{name: $name, surname: $surname, email: $email, password: $password, age: $age, gender: $gender, height: $height, weight: $weight, preferences: $preferences, allergies: $allergies}';
   }
 }

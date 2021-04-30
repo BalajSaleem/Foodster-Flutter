@@ -22,4 +22,11 @@ class  UiUtils {
     return str.replaceAll(" ", "%20");
   }
 
+  static String unNullString(String str){
+    if (str == "null"){
+      return '';
+    }
+    return str;
+  }
+
 }

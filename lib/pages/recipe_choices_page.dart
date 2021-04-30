@@ -4,7 +4,9 @@ import 'package:foodster/Model/Measure.dart';
 import 'package:foodster/Model/Nutrition.dart';
 import 'package:foodster/Model/Recipe.dart';
 import 'package:foodster/components/big_button.dart';
+import 'package:foodster/components/busy_spinkit.dart';
 import 'package:foodster/components/recipe_card.dart';
+import 'package:foodster/controllers/http_caller.dart';
 
 
 String tomatoImg = "https://images.unsplash.com/photo-1576856497337-4f2be24683da?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=682&q=80";
@@ -50,45 +52,67 @@ class RecipeChoicesPage extends StatefulWidget {
 
 class _RecipeChoicesPageState extends State<RecipeChoicesPage> {
 
+
   List<Recipe> availableRecipeChoices = [
-    Recipe(name: 'Tomato Salad', difficulty: 'EASY', prepTime: 20, cookTime: 5,
-        imgUrl: saladImg, instructions: lorem, nutrition: nutrition1, estimatedPrice: 80, ingredients: likedIngs ),
-    Recipe(name: 'Onion Salad', difficulty: 'HARD', prepTime: 30, cookTime: 2,
-        imgUrl: saladImg2, instructions: lorem, nutrition: nutrition2, estimatedPrice: 25, ingredients: likedIngs ),
-    Recipe(name: 'Brocolli Salad', difficulty: 'MEDIUM', prepTime: 5, cookTime: 5,
-        imgUrl: saladImg3, instructions: lorem, nutrition: nutrition1, estimatedPrice: 12, ingredients: dislikedIngs ),
-    Recipe(name: 'Potato Salad', difficulty: 'EASY', prepTime: 15, cookTime: 5,
-        imgUrl: saladImg4, instructions: lorem, nutrition: nutrition2, estimatedPrice: 36, ingredients: dislikedIngs ),
-    Recipe(name: 'Onion Salad', difficulty: 'HARD', prepTime: 30, cookTime: 2,
-        imgUrl: saladImg2, instructions: lorem, nutrition: nutrition2, estimatedPrice: 25, ingredients: likedIngs ),
-    Recipe(name: 'Brocolli Salad', difficulty: 'MEDIUM', prepTime: 5, cookTime: 5,
-        imgUrl: saladImg3, instructions: lorem, nutrition: nutrition1, estimatedPrice: 12, ingredients: dislikedIngs ),
+//    Recipe(name: 'Tomato Salad', difficulty: 'EASY', prepTime: 20, cookTime: 5,
+//        imgUrl: saladImg, instructions: lorem, nutrition: nutrition1, estimatedPrice: 80, ingredients: likedIngs ),
+//    Recipe(name: 'Onion Salad', difficulty: 'HARD', prepTime: 30, cookTime: 2,
+//        imgUrl: saladImg2, instructions: lorem, nutrition: nutrition2, estimatedPrice: 25, ingredients: likedIngs ),
+//    Recipe(name: 'Brocolli Salad', difficulty: 'MEDIUM', prepTime: 5, cookTime: 5,
+//        imgUrl: saladImg3, instructions: lorem, nutrition: nutrition1, estimatedPrice: 12, ingredients: dislikedIngs ),
+//    Recipe(name: 'Potato Salad', difficulty: 'EASY', prepTime: 15, cookTime: 5,
+//        imgUrl: saladImg4, instructions: lorem, nutrition: nutrition2, estimatedPrice: 36, ingredients: dislikedIngs ),
+//    Recipe(name: 'Onion Salad', difficulty: 'HARD', prepTime: 30, cookTime: 2,
+//        imgUrl: saladImg2, instructions: lorem, nutrition: nutrition2, estimatedPrice: 25, ingredients: likedIngs ),
+//    Recipe(name: 'Brocolli Salad', difficulty: 'MEDIUM', prepTime: 5, cookTime: 5,
+//        imgUrl: saladImg3, instructions: lorem, nutrition: nutrition1, estimatedPrice: 12, ingredients: dislikedIngs ),
   ];
 
   List<Recipe> checkedRecipes = [];
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    fetchRecipes();
+  }
+
+  void fetchRecipes ({int n =10}) async {
+
+    List<Recipe> tempRecipeChoices = await HttpCaller.fetchTopRecipesList(n);
+    setState(() {
+      availableRecipeChoices = tempRecipeChoices;
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "CHOOSE YOUR FAVOURITES!",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w300,    ),
-                )
-              ],
-            ),
-            ...buildRecipeCards(availableRecipeChoices),
-            BigButton(
-                text: "Save",
-                onClick: () {handleSave();},
-            )
-          ],
+        child:  buildContent(),
+      );
+  }
 
-        ),
+  Column buildContent() {
+    return Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "CHOOSE YOUR FAVOURITES!",
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w300,    ),
+              )
+            ],
+          ),
+          availableRecipeChoices.isEmpty ? Loader(): Container(),
+          ...buildRecipeCards(availableRecipeChoices),
+          BigButton(
+              text: "Save",
+              onClick: () {handleSave();},
+          )
+        ],
+
       );
   }
 

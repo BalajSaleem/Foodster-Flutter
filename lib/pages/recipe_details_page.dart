@@ -122,7 +122,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text( "Proteins", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, letterSpacing: 1),),
-                  Text( "${recipe.nutrition.proteins.mag} ${ (recipe.nutrition.proteins.unit)}", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, letterSpacing: 1),)
+                  Text( "${UiUtils.unNullString("${recipe.nutrition.proteins.mag}")} ${ UiUtils.unNullString("${recipe.nutrition.proteins.unit}")}", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, letterSpacing: 1),)
                 ]
             ),
           ),
@@ -145,7 +145,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
                 Text(
                     "${UiUtils.firstLetterUppercase(ingredient.ingBase.name)}"),
                 Text(
-                    "${ingredient.measure.mag} ${UiUtils.firstLetterUppercase(ingredient.measure.unit)}")
+                    "${UiUtils.unNullString("${ingredient.measure.mag}")} ${UiUtils.firstLetterUppercase(UiUtils.unNullString("${ingredient.measure.unit}"))}")
               ],
             ),
           );

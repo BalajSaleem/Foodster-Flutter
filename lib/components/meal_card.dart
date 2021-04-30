@@ -73,7 +73,9 @@ class _MealCardState extends State<MealCard> {
                 onTap: () {
                   //navigate to recipe details
                   //Navigator.of(context).push()  RecipeDetailsPage(serving.recipe) );
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => RecipeDetailsPage(recipe: serving.recipe)));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          RecipeDetailsPage(recipe: serving.recipe)));
                   //Navigator.of(context).pushNamed('/recipeDetails', arguments: serving.recipe);
                 },
                 child: Row(children: [
@@ -90,14 +92,18 @@ class _MealCardState extends State<MealCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 4),
                         child: Row(
                           children: [
                             Text(
                               serving.recipe.name.trim(),
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              maxLines: 1,
                               style: TextStyle(
                                   color: Colors.grey[400],
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w500),
                             ),
                             IconButton(
@@ -123,7 +129,7 @@ class _MealCardState extends State<MealCard> {
                                   .trim(),
                               style: TextStyle(
                                   color: Colors.grey[400],
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w300),
                             ),
                             SizedBox(
@@ -134,11 +140,27 @@ class _MealCardState extends State<MealCard> {
                                   .trim(),
                               style: TextStyle(
                                   color: Colors.grey[400],
-                                  fontSize: 14,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Text(
+                              (serving.recipe.estimatedPrice) == null
+                                  ? ''
+                                  : "Price : ${(serving.recipe.estimatedPrice)} TL"
+                                      .trim(),
+                              style: TextStyle(
+                                  color: Colors.grey[400],
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w300),
                             ),
                           ],
                         ),
+                      ),
+                      SizedBox(
+                        height: 16,
                       ),
                     ],
                   ),

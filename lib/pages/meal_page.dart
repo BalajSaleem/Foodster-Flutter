@@ -16,17 +16,18 @@ class MealPage extends StatefulWidget {
 class _MealPageState extends State<MealPage> {
   MealPlan mealPlan;
   List<Meal> meals = [];
-  bool isLoading = false;
+  bool isLoading = true;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    //fetchMeals();
+    fetchMeals();
     //fetch the meals
   }
 
   void fetchMeals() async {
+    print("fetching meal plan");
     setState(() {
       isLoading = true;
     });

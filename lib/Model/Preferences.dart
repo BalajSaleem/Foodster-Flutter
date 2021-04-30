@@ -1,27 +1,8 @@
 import 'package:foodster/Model/Ingredient.dart';
 
-
-//"diets": [
-//"vegan",
-//"paleo",
-//"keto",
-//"vegetarian"
-//]
-
-//ALERGIES
-//"milk",
-//"egg",
-//"peanuts",
-//"cashews",
-//"wheat",
-//"soy",
-//"fish",
-//"nuts"
-
-
-
-
 class Preferences {
+  int mealsPerDay;
+  int mealPlanDuration;
   List<int> calRange;
   List<int> fatRange;
   List<int> carbRange;
@@ -31,9 +12,11 @@ class Preferences {
   String difficulty;
   List<Ingredient> restrictions;
 
-  Preferences({this.calRange, this.fatRange, this.carbRange, this.protRange, this.costRange, this.dietType, this.difficulty, this.restrictions});
+  Preferences({this.mealsPerDay, this.mealPlanDuration, this.calRange, this.fatRange, this.carbRange, this.protRange, this.costRange, this.dietType, this.difficulty, this.restrictions});
 
   Preferences.fromJson(Map<String, dynamic> json) {
+    mealsPerDay = json['mealsPerDay'];
+    mealPlanDuration = json['mealsPlanDuration'];
     calRange = json['calRange']!= null ? json['calRange'].cast<int>() : [];
     fatRange = json['fatRange']!= null ? json['fatRange'].cast<int>() : [];
     carbRange = json['carbRange']!= null ? json['carbRange'].cast<int>() : [];
@@ -54,6 +37,10 @@ class Preferences {
     data['carbRange'] = this.carbRange;
     data['protRange'] = this.protRange;
     data['costRange'] = this.costRange;
+    if (this.mealPlanDuration != null)
+      data['mealPlanDuration'] = this.mealPlanDuration;
+    if (this.mealsPerDay != null)
+      data['mealsPerDay'] = this.mealsPerDay;
     if (this.dietType != null)
       data['dietType'] = this.dietType;
     if (this.difficulty != null)
