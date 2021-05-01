@@ -1,4 +1,6 @@
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foodster/Model/Recipe.dart';
+import 'package:foodster/Model/Serving.dart';
 
 class  UiUtils {
   static void showToast(String msg){
@@ -10,4 +12,21 @@ class  UiUtils {
       return s;
     return '${s[0].toUpperCase()}${s.substring(1).toLowerCase()}';
   }
+
+  static String dateToString(DateTime today){
+    String dateSlug ="${today.year.toString()}-${today.month.toString().padLeft(2,'0')}-${today.day.toString().padLeft(2,'0')}";
+    return dateSlug;
+  }
+  
+  static String replaceSpaces(String str){
+    return str.replaceAll(" ", "%20");
+  }
+
+  static String unNullString(String str){
+    if (str == "null"){
+      return '';
+    }
+    return str;
+  }
+
 }

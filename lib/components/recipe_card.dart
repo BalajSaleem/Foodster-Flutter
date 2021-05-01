@@ -42,7 +42,6 @@ class _RecipeCardState extends State<RecipeCard> {
                   isChecked = !isChecked;
                 });
                 widget.onCardSelected(widget.recipe, isChecked);
-
               },
               child: Container(
                 width: 256,
@@ -81,32 +80,33 @@ class _RecipeCardState extends State<RecipeCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Name: ", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w200,  ),),
-                      Text(widget.recipe.name, style: TextStyle(fontWeight: FontWeight.w300,  )),
+                      Expanded(child: Text(widget.recipe.name, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,
+                          maxLines: 2, style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16 ))),
                     ],
                   ),
+                  SizedBox(height: 24,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Difficulty: ", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w200,  ),),
-                      Text(widget.recipe.difficulty, style: TextStyle(fontWeight: FontWeight.w300,  )),
+                      Text("Calories: ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w200,  ),),
+                      Text("${widget.recipe.nutrition.calories.mag}", style: TextStyle(fontWeight: FontWeight.w300,  )),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Ingredients: ", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w200,  ),),
-                      Expanded(
-                        child: Text(
-                          (widget.recipe.ingredients.map((e) => e.name).toList().join(' , ')),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                            style: TextStyle(fontWeight: FontWeight.w300,  )
-                        ),
-                      ),
-
-                    ],
-                  ),
+//                  Row(
+//                    mainAxisAlignment: MainAxisAlignment.center,
+//                    children: [
+//                      Text("Ingredients: ", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w200,  ),),
+//                      Expanded(
+//                        child: Text(
+//                          (widget.recipe.ingredients.map((e) => e.name).toList().join(' , ')),
+//                          overflow: TextOverflow.ellipsis,
+//                          maxLines: 1,
+//                            style: TextStyle(fontWeight: FontWeight.w300,  )
+//                        ),
+//                      ),
+//
+//                    ],
+//                  ),
                 ],
               ),
             );

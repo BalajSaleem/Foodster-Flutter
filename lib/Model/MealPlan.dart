@@ -28,4 +28,9 @@ class MealPlan {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return 'MealPlan{startDate: $startDate, endDate: $endDate, plan: $plan}';
+  }
 }

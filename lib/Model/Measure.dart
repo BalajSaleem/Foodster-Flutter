@@ -5,14 +5,14 @@ class Measure {
   Measure({this.unit, this.mag});
 
   Measure.fromJson(Map<String, dynamic> json) {
-    unit = json['type'];
-    mag = json['amount'];
+    unit = json['unit'];
+    mag =  json['mag'] != null ? (json['mag']).toDouble(): null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.unit;
-    data['amount'] = this.mag;
+    data['unit'] = this.unit;
+    data['mag'] = this.mag;
     return data;
   }
 }

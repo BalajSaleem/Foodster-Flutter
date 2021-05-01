@@ -1,6 +1,7 @@
 //import 'package:exodus/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodster/components/busy_spinkit.dart';
 import 'package:foodster/controllers/http_caller.dart';
 import 'package:foodster/components/big_button.dart';
 import 'package:foodster/controllers/ui_utils.dart';
@@ -22,7 +23,9 @@ class _LoginState extends State<Login> {
 
   void handleLogin(BuildContext context) {
     print('handling login');
-    //Navigator.of(context).pushNamed('/home');
+    setState(() {
+      isLoading = true;
+    });
     String email = _emailController.text;
     String password = _passwordController.text;
 
@@ -104,10 +107,7 @@ class _LoginState extends State<Login> {
                             height: 40.0,
                             child: !isLoading
                                 ? BigButton(text: "Login", onClick: () {handleLogin(context);})
-                                : SpinKitWave(
-                                    color: Colors.greenAccent,
-                                    size: 30,
-                                  )),
+                                : Loader()),
                         SizedBox(height: 20.0),
                       ],
                     )),

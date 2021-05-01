@@ -10,14 +10,14 @@ class User {
   String password;
   int age;
   String gender;
-  double height;
-  double weight;
+  int height;
+  int weight;
   int iV;
   String token;
   String imgUrl;
 
   Preferences preferences;
-  List<Ingredient> allergies;
+  List<String> allergies;
   List<Recipe> likedRecipes;
   List<Recipe> dislikedRecipes;
   List<Ingredient> likedIngredients;
@@ -33,25 +33,24 @@ class User {
     name = json['name'];
     surname = json['surname'];
     password = json['password'];
-    gender = json['gender'];
-    age = json['age'];
-    height = json['height'];
-    weight = json['weight'];
+    gender = json['gender'] != null ?json['gender'] : null;
+    age = json['age'] != null ? json['age']: null;
+    height = json['height'] != null ? json['height']: null;
+    weight = json['weight'] != null ? json['weight']: null;
     iV = json['__v'];
     token = json['token'];
     imgUrl = json['imgUrl'];
     preferences = json['preferences'] != null ? new Preferences.fromJson(json['preferences']) : null;
-    json['allergies'].forEach((v) { allergies.add(new Ingredient.fromJson(v)); });
-    json['likedRecipes'].forEach((v) { likedRecipes.add(new Recipe.fromJson(v)); });
-    json['dislikedRecipes'].forEach((v) { dislikedRecipes.add(new Recipe.fromJson(v)); });
-    json['likedIngredients'].forEach((v) { likedIngredients.add(new Ingredient.fromJson(v)); });
-    json['dislikedIngredients'].forEach((v) { dislikedIngredients.add(new Ingredient.fromJson(v)); });
+    allergies = json['allergies']!= null ? json['allergies'].cast<String>() : [];
+    //json['likedRecipes'].forEach((v) { likedRecipes.add(new Recipe.fromJson(v)); });
+    //json['dislikedRecipes'].forEach((v) { dislikedRecipes.add(new Recipe.fromJson(v)); });
+    //json['likedIngredients'].forEach((v) { likedIngredients.add(new Ingredient.fromJson(v)); });
+    //json['dislikedIngredients'].forEach((v) { dislikedIngredients.add(new Ingredient.fromJson(v)); });
 
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
     data['email'] = this.email;
     data['name'] = this.name;
     data['surname'] = this.surname;
@@ -60,33 +59,27 @@ class User {
     data['age'] = this.age;
     data['weight'] = this.weight;
     data['gender'] = this.gender;
-    data['__v'] = this.iV;
-    data['token'] = this.token;
     data['imgUrl'] = this.imgUrl;
 
     if (this.preferences != null) {
       data['preferences'] = this.preferences.toJson();
     }
 
-    if (this.allergies != null) {
-      data['allergies'] = this.allergies.map((v) => v.toJson()).toList();
-    }
+    data['allergies'] = this.allergies;
 
     if (this.likedRecipes != null) {
       data['likedRecipes'] = this.likedRecipes.map((v) => v.toJson()).toList();
-    }
-
-    if (this.dislikedRecipes != null) {
-      data['dislikedRecipes'] = this.dislikedRecipes.map((v) => v.toJson()).toList();
     }
 
     if (this.likedIngredients != null) {
       data['likedIngredients'] = this.likedIngredients.map((v) => v.toJson()).toList();
     }
 
-    if (this.dislikedIngredients != null) {
-      data['dislikedIngredients'] = this.dislikedIngredients.map((v) => v.toJson()).toList();
-    }
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'User{name: $name, surname: $surname, email: $email, password: $password, age: $age, gender: $gender, height: $height, weight: $weight, preferences: $preferences, allergies: $allergies}';
   }
 }
