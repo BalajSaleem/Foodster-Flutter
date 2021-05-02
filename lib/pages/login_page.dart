@@ -57,7 +57,8 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        resizeToAvoidBottomPadding: false,
+        //TODO if the change in resize messes things up
+        resizeToAvoidBottomInset: false,
         body: Builder(
           builder: (context) => Padding(
             padding: const EdgeInsets.all(20.0),
