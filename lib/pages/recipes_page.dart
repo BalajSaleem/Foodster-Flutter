@@ -27,7 +27,6 @@ class _RecipePageState extends State<RecipePage> {
       meal = tempMeal;
       isLoading = false;
     });
-
   }
 
   @override

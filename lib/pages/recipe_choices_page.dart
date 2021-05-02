@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodster/Model/Ingredient.dart';
 import 'package:foodster/Model/Measure.dart';
 import 'package:foodster/Model/Nutrition.dart';
@@ -137,9 +138,19 @@ class _RecipeChoicesPageState extends State<RecipeChoicesPage> {
   }
 
   void handleSave(){
-
-    widget.onRecipesSelected(checkedRecipes);
-
+    if(checkedRecipes.length >= 3) {
+      widget.onRecipesSelected(checkedRecipes);
+    }
+    else{
+      Fluttertoast.showToast(
+          msg: 'You have to select at least 3 recipes',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white
+      );
+    }
   }
 
   void updateCheckedRecipes(Recipe recipe, bool add){
