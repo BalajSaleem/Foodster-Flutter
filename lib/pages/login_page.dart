@@ -27,6 +27,11 @@ class _LoginState extends State<Login> {
 
     if(email == '' || password == ''){
      UiUtils.showToast('Email and Password cannot be left empty.');
+
+     setState(() {
+       isLoading = false;
+     });
+
      return;
     }
     HttpCaller.login(email, password, (bool success, int statusCode, [String token = '']) async{

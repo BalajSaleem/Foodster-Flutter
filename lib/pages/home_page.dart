@@ -7,7 +7,6 @@ import 'package:foodster/pages/user_page.dart';
 import 'meal_page.dart';
 import 'package:foodster/controllers/logout.dart';
 import '../utils/globals.dart' as globals;
-import 'package:foodster/controllers/http_caller.dart';
 
 class Home extends StatefulWidget {
   @override

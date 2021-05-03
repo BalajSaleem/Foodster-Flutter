@@ -7,4 +7,4 @@ User user = User(
     email: 'balaj@balaj.com',
     password: 'default');
 
-int numberOfLikedMeals = -1;
+int numberOfLikedMeals = 0;

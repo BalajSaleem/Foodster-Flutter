@@ -19,8 +19,7 @@ void main() async {
     start = token == null ? '/login' : '/home';
   });
 
-  globals.user = await HttpCaller.fetchUser();
-  // globals.numberOfLikedMeals = await HttpCaller.fetchLikedRecipesNumber();
+  globals.numberOfLikedMeals = await HttpCaller.fetchLikedRecipesNumber();
   //start = '/home'; //TODO: REMOVE AT PRODUCTION!
 
   runApp(MaterialApp(
