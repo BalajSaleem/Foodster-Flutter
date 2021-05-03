@@ -7,6 +7,8 @@ import 'package:foodster/Model/User.dart';
 import 'package:foodster/components/BackupMealPlan.dart';
 import 'package:foodster/controllers/ui_utils.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 import '../pref_manager.dart';
 
@@ -221,6 +223,27 @@ class HttpCaller {
     List<dynamic> data = json.decode(response.body);
     recipes = (data.map((recipe) => Recipe.fromJson(recipe))).toList();
     return recipes;
+  }
+
+  static Future<int> fetchLikedRecipesNumber() async {
+    print("fetching number of user liked recipes");
+    http.Response response = await http.get(
+      '$_baseUrl/users/liked_recipes?number=true',
+      headers: {
+        'Authorization': 'Bearer ${await PrefManager.getToken()}',
+      },
+    );
+    print("Fetch Number of Liked Recipes Status: ${response.statusCode}");
+
+    if(response.statusCode == 200) {
+      Map<String, dynamic> result = json.decode(response.body);
+      return result['number'];
+    }
+    return 0;
+    // List<Recipe> recipes = [];
+    // List<dynamic> data = json.decode(response.body);
+    // recipes = (data.map((recipe) => Recipe.fromJson(recipe))).toList();
+    // return recipes;
   }
 
   static Future<User> updateUser(Map<String, dynamic> userJson) async {

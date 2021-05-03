@@ -23,9 +23,25 @@ class User {
   List<Ingredient> likedIngredients;
   List<Ingredient> dislikedIngredients;
 
-  User({this.sId, this.email, this.name, this.surname, this.age, this.password, this.gender, this.height,
-    this.weight, this.iV, this.token, this.imgUrl, this.preferences, this.allergies,
-    this.likedIngredients, this.dislikedIngredients, this.likedRecipes, this.dislikedRecipes});
+  User(
+      {this.sId,
+      this.email,
+      this.name,
+      this.surname,
+      this.age,
+      this.password,
+      this.gender,
+      this.height,
+      this.weight,
+      this.iV,
+      this.token,
+      this.imgUrl,
+      this.preferences,
+      this.allergies,
+      this.likedIngredients,
+      this.dislikedIngredients,
+      this.likedRecipes,
+      this.dislikedRecipes});
 
   User.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -33,20 +49,18 @@ class User {
     name = json['name'];
     surname = json['surname'];
     password = json['password'];
-    gender = json['gender'] != null ?json['gender'] : null;
-    age = json['age'] != null ? json['age']: null;
-    height = json['height'] != null ? json['height']: null;
-    weight = json['weight'] != null ? json['weight']: null;
+    gender = json['gender'] != null ? json['gender'] : null;
+    age = json['age'] != null ? json['age'] : null;
+    height = json['height'] != null ? json['height'] : null;
+    weight = json['weight'] != null ? json['weight'] : null;
     iV = json['__v'];
     token = json['token'];
     imgUrl = json['imgUrl'];
-    preferences = json['preferences'] != null ? new Preferences.fromJson(json['preferences']) : null;
-    allergies = json['allergies']!= null ? json['allergies'].cast<String>() : [];
-    //json['likedRecipes'].forEach((v) { likedRecipes.add(new Recipe.fromJson(v)); });
-    //json['dislikedRecipes'].forEach((v) { dislikedRecipes.add(new Recipe.fromJson(v)); });
-    //json['likedIngredients'].forEach((v) { likedIngredients.add(new Ingredient.fromJson(v)); });
-    //json['dislikedIngredients'].forEach((v) { dislikedIngredients.add(new Ingredient.fromJson(v)); });
-
+    preferences = json['preferences'] != null
+        ? new Preferences.fromJson(json['preferences'])
+        : null;
+    allergies =
+        json['allergies'] != null ? json['allergies'].cast<String>() : [];
   }
 
   Map<String, dynamic> toJson() {
@@ -72,7 +86,8 @@ class User {
     }
 
     if (this.likedIngredients != null) {
-      data['likedIngredients'] = this.likedIngredients.map((v) => v.toJson()).toList();
+      data['likedIngredients'] =
+          this.likedIngredients.map((v) => v.toJson()).toList();
     }
 
     return data;

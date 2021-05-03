@@ -1,51 +1,25 @@
-
 import 'package:flutter/material.dart';
 import 'package:foodster/Model/Recipe.dart';
 import 'package:foodster/controllers/http_caller.dart';
-import 'package:foodster/controllers/pref_manager.dart';
 import 'package:foodster/pages/recipes_page.dart';
-import 'package:foodster/pages/StatsPage.dart';
-import 'package:foodster/pages/grocery_page.dart';
 import 'package:foodster/pages/recipe_choices_page.dart';
 import 'package:foodster/pages/user_page.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import 'meal_page.dart';
 import 'package:foodster/controllers/logout.dart';
+import '../utils/globals.dart' as globals;
+import 'package:foodster/controllers/http_caller.dart';
 
 class Home extends StatefulWidget {
-  //const Home({ this.user}) ;
-
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-
   int _selectedNavIndex = 1;
-  bool hasInitialSelections = false; //TODO: change to false on start
 
+  bool hasInitialSelections = (globals.numberOfLikedMeals > 0);
 
   final GlobalKey<ScrollableState> globalScrollKey = new GlobalKey<ScrollableState>();
-
-  // void fetchAllEvents() async{
-  //   http.Response response = await http.get('$baseUrl/events/');
-  //   List<dynamic> data = json.decode(response.body);
-  //   setState(() {
-  //     activities = (data.map((activity) => Activity.fromJson(activity))).toList();
-  //   });
-  // }
-
-  void _showToast(BuildContext context,String message) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
-
 
   //Navbar navigation
   void _onNavItemTapped(int index) {
@@ -55,11 +29,9 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
     _onNavItemTapped(_selectedNavIndex);
-
-    //TODO:
   }
 
   @override
@@ -125,15 +97,12 @@ class _HomeState extends State<Home> {
   }
 
   void addInitialRecipeSelections(List<Recipe> recipes){
-
     setState(() {
       hasInitialSelections = true;
     });
-
     recipes.forEach((recipe) {
       likeRecipe(recipe.name);
     });
-
   }
 
   void likeRecipe(String recipeName) async {

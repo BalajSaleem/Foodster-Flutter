@@ -3,7 +3,6 @@ import 'package:foodster/Model/Ingredient.dart';
 import 'package:foodster/Model/Nutrition.dart';
 import 'package:foodster/Model/Preferences.dart';
 import 'package:foodster/Model/User.dart';
-import 'package:foodster/components/big_button.dart';
 import 'package:foodster/components/busy_spinkit.dart';
 import 'package:foodster/components/ingredient_list.dart';
 import 'package:foodster/components/preferences_card.dart';
