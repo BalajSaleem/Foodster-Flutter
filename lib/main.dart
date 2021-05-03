@@ -20,7 +20,7 @@ void main() async {
   });
 
   globals.user = await HttpCaller.fetchUser();
-  globals.numberOfLikedMeals = await HttpCaller.fetchLikedRecipesNumber();
+  // globals.numberOfLikedMeals = await HttpCaller.fetchLikedRecipesNumber();
   //start = '/home'; //TODO: REMOVE AT PRODUCTION!
 
   runApp(MaterialApp(

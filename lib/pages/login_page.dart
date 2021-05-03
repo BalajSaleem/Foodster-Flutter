@@ -32,9 +32,6 @@ class _LoginState extends State<Login> {
     HttpCaller.login(email, password, (bool success, int statusCode, [String token = '']) async{
       if(success){
         print('Logging in');
-        print('Storing the user in the global file');
-        globals.user = await HttpCaller.fetchUser();
-
         PrefManager.storeToken(token);
         Navigator.of(context).popAndPushNamed('/home');
       }

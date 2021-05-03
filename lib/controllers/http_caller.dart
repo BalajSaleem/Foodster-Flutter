@@ -8,6 +8,7 @@ import 'package:foodster/components/BackupMealPlan.dart';
 import 'package:foodster/controllers/ui_utils.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../utils/globals.dart' as globals;
 
 
 import '../pref_manager.dart';
@@ -205,6 +206,9 @@ class HttpCaller {
     );
     print("Fetch User Status: ${response.statusCode}");
     //print(response.body);
+    Map<String, dynamic> decodedUser = json.decode(response.body);
+    globals.numberOfLikedMeals = decodedUser['likedRecipes'].length;
+
     User user = User.fromJson(json.decode(response.body));
     return user;
   }
