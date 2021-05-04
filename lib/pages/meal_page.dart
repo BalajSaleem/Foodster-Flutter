@@ -8,6 +8,10 @@ import 'package:foodster/components/meal_card.dart';
 import 'package:foodster/controllers/http_caller.dart';
 import 'package:foodster/controllers/ui_utils.dart';
 
+import '../Model/MealPlan.dart';
+import '../controllers/pref_manager.dart';
+import '../controllers/ui_utils.dart';
+
 class MealPage extends StatefulWidget {
   @override
   _MealPageState createState() => _MealPageState();
@@ -22,8 +26,33 @@ class _MealPageState extends State<MealPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchMeals();
-    //fetch the meals
+
+    checkCacheForMealPlan();
+  }
+
+  void checkCacheForMealPlan() async {
+    print("checking cache for meal plan");
+    setState(() {
+      isLoading = true;
+    });
+
+    // Get meal plan from local cache if a meal plan exists
+    MealPlan mp = await PrefManager.getActiveMealPlan();
+    int planDay = getMealsIndexForDay(mp);
+
+    // no cached meal plan, or no mealday for today
+    if(mp == null || planDay == -1) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+    else {
+      // populate page if mealplan is cached
+      setState(() {
+        mealPlan = mp;
+        meals = mp.plan[planDay].meals;
+      });
+    }
   }
 
   void fetchMeals() async {
@@ -31,27 +60,48 @@ class _MealPageState extends State<MealPage> {
     setState(() {
       isLoading = true;
     });
+
+    UiUtils.showToast("We are generating a meal plan for you");
+
     MealPlan mp = await HttpCaller.fetchMealPlan();
-    //print(mp);
+    PrefManager.storeActiveMealPlan(mp);
+
+    print("MealPlan: $mp");
+
     setState(() {
       mealPlan = mp;
       meals = mp.plan[0].meals;
     });
   }
 
-  void setMeals(DateTime date) {
-    bool found = false;
-    mealPlan.plan.forEach((mealDay) {
+  int getMealsIndexForDay(MealPlan mp, [DateTime date]){
+    if(mp == null)
+      return -1;
+
+    if(date == null){
+      date = DateTime.now();
+    }
+
+    int resIndex = -1;
+    mp.plan.asMap().forEach((index, mealDay) {
       if (mealDay.date.day.compareTo(date.day) == 0) {
-        //print("found a mealday for : ${mealDay.date}");
-        setState(() {
-          meals = mealDay.meals;
-          //meals = [];
-        });
-        found = true;
+        resIndex = index;
       }
     });
-    if (!found)
+
+    return resIndex;
+  }
+
+  void setMeals(DateTime date) {
+    int mealIndex = getMealsIndexForDay(mealPlan, date);
+
+    if(mealIndex != -1) {
+      setState(() {
+        meals = mealPlan.plan[mealIndex].meals;
+        //meals = [];
+      });
+    }
+    else
       UiUtils.showToast(
           "Meal Day for ${UiUtils.dateToString(date)} could not be found");
   }

@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../utils/globals.dart' as globals;
 
-import '../pref_manager.dart';
+import './pref_manager.dart';
 
 class HttpCaller {
   static const String _baseUrl = "https://foodster-cs491.herokuapp.com";
