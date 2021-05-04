@@ -21,13 +21,12 @@ class _RecipePageState extends State<RecipePage> {
     fetchTopRecipes();
   }
 
-  void fetchTopRecipes( {int n = 10} ) async {
+  void fetchTopRecipes( {int n = 30} ) async {
     Meal tempMeal = await HttpCaller.fetchTopRecipesMeal(n);
     setState(() {
       meal = tempMeal;
       isLoading = false;
     });
-
   }
 
   @override

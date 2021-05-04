@@ -5,12 +5,11 @@ class PrefManager {
 
   static const String TOKEN = 'token';
 
-  static Future<Null> _initialize() async{
-    if(_prefs == null)
-      _prefs = await SharedPreferences.getInstance();
+  static Future<Null> _initialize() async {
+    if (_prefs == null) _prefs = await SharedPreferences.getInstance();
   }
 
-  static void storeToken(String token) async{
+  static void storeToken(String token) async {
     await _initialize();
     _prefs.setString(TOKEN, token);
   }

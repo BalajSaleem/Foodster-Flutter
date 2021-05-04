@@ -7,6 +7,8 @@ import 'package:foodster/Model/User.dart';
 import 'package:foodster/components/BackupMealPlan.dart';
 import 'package:foodster/controllers/ui_utils.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../utils/globals.dart' as globals;
 
 import '../pref_manager.dart';
 
@@ -25,8 +27,7 @@ class HttpCaller {
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 201)
-        callback(
-            true, response.statusCode);
+        callback(true, response.statusCode);
       else
         callback(false, response.statusCode);
     }, onError: (e) {
@@ -107,15 +108,13 @@ class HttpCaller {
       },
     );
     print("Fetch Meal Plan Status: ${response.statusCode}");
-    try{
+    try {
       MealPlan data = MealPlan.fromJson(json.decode(response.body));
       return data;
-    }
-    catch(e){
+    } catch (e) {
       print(response.body);
       return BackUps.getBackupMealPlan();
     }
-
   }
 
   static Future<String> likeRecipe(String recipeName) async {
@@ -141,15 +140,14 @@ class HttpCaller {
     );
     print("Fetch Recipe Status: ${response.statusCode}");
     //print(response.body);
-    try{
+    try {
       Recipe data = Recipe.fromJson(json.decode(response.body));
       return data;
-    }
-    catch (e){
+    } catch (e) {
       print(response.body);
       return null;
     }
-    }
+  }
 
   static Future<Meal> fetchTopRecipesMeal(int n) async {
     print("fetching top recipes");
@@ -179,18 +177,15 @@ class HttpCaller {
     );
     print("Fetch Top Recipes Status: ${response.statusCode}");
     List<Recipe> servings = [];
-    try{
+    try {
       List<dynamic> data = json.decode(response.body);
-      servings =
-          (data.map((recipe) => Recipe.fromJson(recipe))).toList();
+      servings = (data.map((recipe) => Recipe.fromJson(recipe))).toList();
       //print(response.body);
       return servings;
-    }
-    catch (e){
+    } catch (e) {
       print(response.body);
       return [];
     }
-
   }
 
   static Future<User> fetchUser() async {
@@ -203,6 +198,10 @@ class HttpCaller {
     );
     print("Fetch User Status: ${response.statusCode}");
     //print(response.body);
+    Map<String, dynamic> decodedUser = json.decode(response.body);
+    if (decodedUser['likedRecipes'] != null) {
+      globals.numberOfLikedMeals = decodedUser['likedRecipes'].length;
+    }
     User user = User.fromJson(json.decode(response.body));
     return user;
   }
@@ -221,6 +220,27 @@ class HttpCaller {
     List<dynamic> data = json.decode(response.body);
     recipes = (data.map((recipe) => Recipe.fromJson(recipe))).toList();
     return recipes;
+  }
+
+  static Future<int> fetchLikedRecipesNumber() async {
+    print("fetching number of user liked recipes");
+    http.Response response = await http.get(
+      '$_baseUrl/users/liked_recipes?number=true',
+      headers: {
+        'Authorization': 'Bearer ${await PrefManager.getToken()}',
+      },
+    );
+    print("Fetch Number of Liked Recipes Status: ${response.statusCode}");
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> result = json.decode(response.body);
+      return result['number'];
+    }
+    return 0;
+    // List<Recipe> recipes = [];
+    // List<dynamic> data = json.decode(response.body);
+    // recipes = (data.map((recipe) => Recipe.fromJson(recipe))).toList();
+    // return recipes;
   }
 
   static Future<User> updateUser(Map<String, dynamic> userJson) async {

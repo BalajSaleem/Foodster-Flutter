@@ -1,4 +1,3 @@
-//import 'package:exodus/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodster/components/busy_spinkit.dart';
@@ -6,10 +5,7 @@ import 'package:foodster/controllers/http_caller.dart';
 import 'package:foodster/components/big_button.dart';
 import 'package:foodster/controllers/ui_utils.dart';
 import 'package:foodster/controllers/pref_manager.dart';
-
-//import 'package:exodus/models/Person.dart';
-import 'dart:convert';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../utils/globals.dart' as globals;
 
 class Login extends StatefulWidget {
   @override
@@ -31,9 +27,14 @@ class _LoginState extends State<Login> {
 
     if(email == '' || password == ''){
      UiUtils.showToast('Email and Password cannot be left empty.');
+
+     setState(() {
+       isLoading = false;
+     });
+
      return;
     }
-    HttpCaller.login(email, password, (bool success, int statusCode, [String token = '']) {
+    HttpCaller.login(email, password, (bool success, int statusCode, [String token = '']) async{
       if(success){
         print('Logging in');
         PrefManager.storeToken(token);
@@ -45,19 +46,11 @@ class _LoginState extends State<Login> {
     });
   }
 
-  // void _showToast(BuildContext context, String message) {
-  //   final scaffold = Scaffold.of(context);
-  //   scaffold.showSnackBar(
-  //     SnackBar(
-  //       content: Text(message),
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        resizeToAvoidBottomPadding: false,
+        //TODO if the change in resize messes things up
+        resizeToAvoidBottomInset: false,
         body: Builder(
           builder: (context) => Padding(
             padding: const EdgeInsets.all(20.0),
