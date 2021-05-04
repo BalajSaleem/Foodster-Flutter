@@ -28,7 +28,7 @@ class Meal {
     data['calories'] = this.calories;
     data['imgUrl'] = this.imgUrl;
     if (this.servings != null) {
-      data['recipes'] = this.servings.map((v) => v.toJson()).toList();
+      data['servings'] = this.servings.map((v) => v.toJson()).toList();
     }
     return data;
   }

@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
       if(success){
         print('Logging in');
         PrefManager.storeToken(token);
-        Navigator.of(context).popAndPushNamed('/home');
+        Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
       }
       else{
         UiUtils.showToast('Failed to Log In');

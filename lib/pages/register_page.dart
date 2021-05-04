@@ -77,13 +77,12 @@ class _SignUpState extends State<SignUp> {
       isLoading = true;
     });
     HttpCaller.signup(json,
-            (bool success, int statusCode){
+            (bool success, int statusCode) {
           if(success) {
             setState(() {
               isLoading = false;
             });
-            print('Logging in');
-            Navigator.of(context).popAndPushNamed('/login');
+            Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
           }
           else{
             UiUtils.showToast('Failed to Sign Up');
