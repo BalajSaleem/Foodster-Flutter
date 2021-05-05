@@ -5,8 +5,10 @@ import 'package:foodster/controllers/ui_utils.dart';
 import 'package:foodster/pages/recipe_details_page.dart';
 
 class MealCard extends StatefulWidget {
-  const MealCard({Key key, this.meal}) : super(key: key);
+  const MealCard({Key key, this.meal, this.hasHeader = true, this.canLikeMeals = true}) : super(key: key);
   final Meal meal;
+  final bool hasHeader;
+  final bool canLikeMeals;
 
   @override
   _MealCardState createState() => _MealCardState();
@@ -38,29 +40,38 @@ class _MealCardState extends State<MealCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(4),
-                child: Text(
-                  widget.meal.name,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-//              Padding(
-//                padding: const EdgeInsets.all(4),
-//                child: Text("Calories: ${meal.calories}", style: TextStyle(fontSize: 14, color: Colors.grey[300])),
-//              ),
-              Divider(
-                color: Colors.grey,
-              ),
+              widget.hasHeader ? buildHeader() : Container(),
               buildRecipeList()
             ],
           ),
         ),
       ),
     );
+  }
+
+  Column buildHeader() {
+    return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Text(
+                    widget.meal.name,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+//              Padding(
+//                padding: const EdgeInsets.all(4),
+//                child: Text("Calories: ${meal.calories}", style: TextStyle(fontSize: 14, color: Colors.grey[300])),
+//              ),
+                Divider(
+                  color: Colors.grey,
+                ),
+              ],
+            );
   }
 
   Column buildRecipeList() {
@@ -110,7 +121,7 @@ class _MealCardState extends State<MealCard> {
                               ),
                               Flexible(
                                 flex: 1,
-                                child: IconButton(
+                                child: widget.canLikeMeals ? IconButton(
                                     icon: Icon(
                                       Icons.thumb_up,
                                       color:
@@ -120,7 +131,8 @@ class _MealCardState extends State<MealCard> {
                                     ),
                                     onPressed: () async {
                                       likeRecipe(serving.recipe.name);
-                                    }),
+                                    }):
+                                Container(),
                               )
                             ],
                           ),
@@ -147,7 +159,7 @@ class _MealCardState extends State<MealCard> {
                                 ),
                               ),
                             SizedBox(
-                              width: 30,
+                              width: 20,
                             ),
                               Flexible(
                                 flex: 1,
@@ -164,14 +176,13 @@ class _MealCardState extends State<MealCard> {
                                 ),
                               ),
                             SizedBox(
-                              width: 30,
+                              width: 20,
                             ),
-                              Flexible(
+                              (serving.recipe.estimatedPrice) != null
+                                  ? Flexible(
                                 flex: 1,
                                 child: Text(
-                                  (serving.recipe.estimatedPrice) == null
-                                      ? ''
-                                      : "Price : ${(serving.recipe.estimatedPrice)} TL"
+                                   "Price : ${(serving.recipe.estimatedPrice)} TL"
                                           .trim(),
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
@@ -181,7 +192,7 @@ class _MealCardState extends State<MealCard> {
                                       fontSize: 12,
                                       fontWeight: FontWeight.w300),
                                 ),
-                              ),
+                              ): Container(),
                             ],
                           ),
                         ),
