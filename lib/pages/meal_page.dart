@@ -63,7 +63,7 @@ class _MealPageState extends State<MealPage> {
 
     UiUtils.showToast("We are generating a meal plan for you");
 
-    MealPlan mp = await HttpCaller.fetchMealPlan();
+    MealPlan mp = await HttpCaller.fetchMealPlan(contextForTokenExpirationHandling: context);
     PrefManager.storeActiveMealPlan(mp);
 
     print("MealPlan: $mp");

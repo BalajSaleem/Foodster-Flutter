@@ -79,7 +79,7 @@ class _RecipeChoicesPageState extends State<RecipeChoicesPage> {
   }
 
   void fetchRecipes ({int n =30}) async {
-    List<Recipe> tempRecipeChoices = await HttpCaller.fetchTopRecipesList(n);
+    List<Recipe> tempRecipeChoices = await HttpCaller.fetchTopRecipesList(n, contextForTokenExpirationHandling: context);
     setState(() {
       availableRecipeChoices = tempRecipeChoices;
     });

@@ -1,9 +1,5 @@
-import 'dart:io';
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodster/Model/Meal.dart';
 import 'package:foodster/Model/Preferences.dart';
 import 'package:foodster/Model/User.dart';
 import 'package:foodster/components/big_button.dart';
@@ -57,7 +53,7 @@ class _PreferencesCardState extends State<PreferencesCard> {
     setState(() {
       isUpdateLoading = true;
     });
-    User updatedUser = await HttpCaller.updateUser(json);
+    User updatedUser = await HttpCaller.updateUser(json, contextForTokenExpirationHandling: context);
     setState(() {
       isUpdateLoading = false;
       preferences = updatedUser.preferences;

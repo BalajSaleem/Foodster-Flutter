@@ -16,7 +16,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedNavIndex = 1;
 
-
   bool hasInitialSelections = (globals.numberOfLikedMeals > 0);
 
   final GlobalKey<ScrollableState> globalScrollKey = new GlobalKey<ScrollableState>();
@@ -106,7 +105,7 @@ class _HomeState extends State<Home> {
   }
 
   void likeRecipe(String recipeName) async {
-    String result = await HttpCaller.likeRecipe(recipeName);
+    String result = await HttpCaller.likeRecipe(recipeName, contextForTokenExpirationHandling: context);
     print(result);
   }
 

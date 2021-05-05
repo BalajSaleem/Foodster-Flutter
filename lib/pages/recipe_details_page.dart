@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:foodster/Model/Recipe.dart';
 import 'package:foodster/components/busy_spinkit.dart';
 import 'package:foodster/controllers/http_caller.dart';
@@ -35,7 +34,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
   void fetchRecipeDetails() async {
     print("fetching recipe details");
     print(widget.recipe.name);
-    Recipe tempRecipe = await HttpCaller.fetchRecipe(widget.recipe.name);
+    Recipe tempRecipe = await HttpCaller.fetchRecipe(widget.recipe.name, contextForTokenExpirationHandling: context);
     setState(() {
       recipe = tempRecipe;
       isLoading = false;
