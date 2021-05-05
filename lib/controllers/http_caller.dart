@@ -118,7 +118,8 @@ class HttpCaller {
       MealPlan data = MealPlan.fromJson(json.decode(response.body));
       return data;
     } catch (e) {
-      print(response.body);
+      if(response != null)
+        print(response.body);
       return BackUps.getBackupMealPlan();
     }
   }
@@ -134,9 +135,16 @@ class HttpCaller {
 
     _tokenExpirationSentinel(response, contextForTokenExpirationHandling);
 
-    print("Like Recipe: $recipeName Status: ${response.statusCode}");
-    String data = response.body;
-    return data;
+    if(response != null && response.statusCode == 200) {
+      print("Like Recipe: $recipeName Status: ${response.statusCode}");
+      String data = response.body;
+      return data;
+    }
+    else{
+      if(response != null)
+        print(response.body);
+      return "Something went wrong :( with likeRecipe";
+    }
   }
 
   static Future<Recipe> fetchRecipe(String recipeName, {BuildContext contextForTokenExpirationHandling}) async {
@@ -156,7 +164,8 @@ class HttpCaller {
       Recipe data = Recipe.fromJson(json.decode(response.body));
       return data;
     } catch (e) {
-      print(response.body);
+      if(response != null)
+        print(response.body);
       return null;
     }
   }
@@ -172,14 +181,21 @@ class HttpCaller {
 
     _tokenExpirationSentinel(response, contextForTokenExpirationHandling);
 
-    print("Fetch Top Recipes Status: ${response.statusCode}");
-    List<Serving> servings = [];
-    List<dynamic> data = json.decode(response.body);
-    servings =
-        (data.map((recipe) => Recipe.fromJson(recipe).toServing())).toList();
-    //print(response.body);
-    Meal meal = new Meal(name: "Top $n Recipes", servings: servings);
-    return meal;
+    try {
+      print("Fetch Top Recipes Status: ${response.statusCode}");
+      List<Serving> servings = [];
+      List<dynamic> data = json.decode(response.body);
+      servings =
+          (data.map((recipe) => Recipe.fromJson(recipe).toServing())).toList();
+      //print(response.body);
+      Meal meal = new Meal(name: "Top $n Recipes", servings: servings);
+      return meal;
+    } catch(e) {
+      if(response != null)
+        print(response.body);
+      print(e);
+      return null;
+    }
   }
 
   static Future<List<Recipe>> fetchTopRecipesList(int n, {BuildContext contextForTokenExpirationHandling}) async {
@@ -219,12 +235,19 @@ class HttpCaller {
 
     print("Fetch User Status: ${response.statusCode}");
     //print(response.body);
-    Map<String, dynamic> decodedUser = json.decode(response.body);
-    if (decodedUser['likedRecipes'] != null) {
-      globals.numberOfLikedMeals = decodedUser['likedRecipes'].length;
+    try {
+      Map<String, dynamic> decodedUser = json.decode(response.body);
+      if (decodedUser['likedRecipes'] != null) {
+        globals.numberOfLikedMeals = decodedUser['likedRecipes'].length;
+      }
+      User user = User.fromJson(json.decode(response.body));
+      return user;
+    } catch(e){
+      if(response != null)
+        print(response.body);
+      print(e);
+      return null;
     }
-    User user = User.fromJson(json.decode(response.body));
-    return user;
   }
 
   static Future<List<Recipe>> fetchLikedRecipes({BuildContext contextForTokenExpirationHandling}) async {
@@ -240,14 +263,22 @@ class HttpCaller {
 
     print("Fetch Liked Recipes Status: ${response.statusCode}");
     //print(response.body);
-    List<Recipe> recipes = [];
-    List<dynamic> data = json.decode(response.body);
-    recipes = (data.map((recipe) => Recipe.fromJson(recipe))).toList();
-    return recipes;
+    try {
+      List<Recipe> recipes = [];
+      List<dynamic> data = json.decode(response.body);
+      recipes = (data.map((recipe) => Recipe.fromJson(recipe))).toList();
+      return recipes;
+    } catch(e){
+      if(response != null)
+        print(response.body);
+      print(e);
+      return [];
+    }
   }
 
   static Future<int> fetchLikedRecipesNumber({BuildContext contextForTokenExpirationHandling}) async {
     print("fetching number of user liked recipes");
+    print("fetchLikedRecipeNo Token ${await PrefManager.getToken()}");
     http.Response response = await http.get(
       '$_baseUrl/users/liked_recipes?number=true',
       headers: {
@@ -283,10 +314,16 @@ class HttpCaller {
 
     _tokenExpirationSentinel(response, contextForTokenExpirationHandling);
 
-    print("Update user Status: ${response.statusCode}");
-    User user = User.fromJson(json.decode(response.body));
-    print(user.preferences);
-    return user;
+    try {
+      print("Update user Status: ${response.statusCode}");
+      User user = User.fromJson(json.decode(response.body));
+      print(user.preferences);
+      return user;
+    } catch(e){
+      if(response != null)
+        print(response.body);
+      print(e);
+    }
   }
 
   static void _tokenExpirationSentinel(http.Response response, BuildContext contextForTokenExpirationHandling){

@@ -16,7 +16,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedNavIndex = 1;
 
-
   bool hasInitialSelections = (globals.numberOfLikedMeals > 0);
 
   final GlobalKey<ScrollableState> globalScrollKey = new GlobalKey<ScrollableState>();
