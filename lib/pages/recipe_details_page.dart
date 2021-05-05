@@ -170,12 +170,23 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
   Widget buildInstructions() {
     return Column(
       children: [
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Cook Time: ${recipe.cookTime} minutes", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, letterSpacing: 0.75),),
-              Text("Prep Time: ${recipe.prepTime} minutes", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, letterSpacing: 0.75),)
-            ]
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Text("Cook Time: ${recipe.cookTime} minutes",  overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.left,
+                    maxLines: 2, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, letterSpacing: 0.75),),
+                ),
+                Flexible(
+                  child: Text("Prep Time: ${recipe.prepTime} minutes",  overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.left,
+                    maxLines: 2, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, letterSpacing: 0.75),),
+                )
+              ]
+          ),
         ),
 
         new Container(

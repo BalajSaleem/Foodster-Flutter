@@ -5,8 +5,10 @@ import 'package:foodster/controllers/ui_utils.dart';
 import 'package:foodster/pages/recipe_details_page.dart';
 
 class MealCard extends StatefulWidget {
-  const MealCard({Key key, this.meal}) : super(key: key);
+  const MealCard({Key key, this.meal, this.hasHeader = true, this.canLikeMeals = true}) : super(key: key);
   final Meal meal;
+  final bool hasHeader;
+  final bool canLikeMeals;
 
   @override
   _MealCardState createState() => _MealCardState();
@@ -38,29 +40,38 @@ class _MealCardState extends State<MealCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(4),
-                child: Text(
-                  widget.meal.name,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-//              Padding(
-//                padding: const EdgeInsets.all(4),
-//                child: Text("Calories: ${meal.calories}", style: TextStyle(fontSize: 14, color: Colors.grey[300])),
-//              ),
-              Divider(
-                color: Colors.grey,
-              ),
+              widget.hasHeader ? buildHeader() : Container(),
               buildRecipeList()
             ],
           ),
         ),
       ),
     );
+  }
+
+  Column buildHeader() {
+    return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Text(
+                    widget.meal.name,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+//              Padding(
+//                padding: const EdgeInsets.all(4),
+//                child: Text("Calories: ${meal.calories}", style: TextStyle(fontSize: 14, color: Colors.grey[300])),
+//              ),
+                Divider(
+                  color: Colors.grey,
+                ),
+              ],
+            );
   }
 
   Column buildRecipeList() {
@@ -91,69 +102,99 @@ class _MealCardState extends State<MealCard> {
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12.0, vertical: 4),
-                        child: Row(
-                          children: [
-                            Text(
-                              serving.recipe.name.trim(),
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              maxLines: 1,
-                              style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            IconButton(
-                                icon: Icon(
-                                  Icons.thumb_up,
-                                  color:
-                                      likedRecipes.contains(serving.recipe.name)
-                                          ? Colors.greenAccent
-                                          : Colors.grey,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.75,
+                          child: Row(
+                            children: [
+                              Flexible(
+                                flex: 3,
+                                child: Text(
+                                  serving.recipe.name.trim(),
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      color: Colors.grey[400],
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500),
                                 ),
-                                onPressed: () async {
-                                  likeRecipe(serving.recipe.name);
-                                })
-                          ],
+                              ),
+                              Flexible(
+                                flex: 1,
+                                child: widget.canLikeMeals ? IconButton(
+                                    icon: Icon(
+                                      Icons.thumb_up,
+                                      color:
+                                          likedRecipes.contains(serving.recipe.name)
+                                              ? Colors.greenAccent
+                                              : Colors.grey,
+                                    ),
+                                    onPressed: () async {
+                                      likeRecipe(serving.recipe.name);
+                                    }):
+                                Container(),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "${UiUtils.firstLetterUppercase(serving.recipe.nutrition.calories.unit)}:  ${(serving.recipe.nutrition.calories.mag)} "
-                                  .trim(),
-                              style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Text(
-                              "Cook Time: ${(serving.recipe.cookTime)} min"
-                                  .trim(),
-                              style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Text(
-                              (serving.recipe.estimatedPrice) == null
-                                  ? ''
-                                  : "Price : ${(serving.recipe.estimatedPrice)} TL"
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.75,
+                          child: Row(
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                child: Text(
+                                  "${UiUtils.firstLetterUppercase(serving.recipe.nutrition.calories.unit)}:  ${(serving.recipe.nutrition.calories.mag)} "
                                       .trim(),
-                              style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w300),
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.grey[400],
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              ),
+                            SizedBox(
+                              width: 20,
                             ),
-                          ],
+                              Flexible(
+                                flex: 1,
+                                child: Text(
+                                  "Cook Time: ${(serving.recipe.cookTime)} min"
+                                      .trim(),
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.grey[400],
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                              (serving.recipe.estimatedPrice) != null
+                                  ? Flexible(
+                                flex: 1,
+                                child: Text(
+                                   "Price : ${(serving.recipe.estimatedPrice)} TL"
+                                          .trim(),
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      color: Colors.grey[400],
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              ): Container(),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:foodster/Model/Ingredient.dart';
+import 'package:foodster/Model/Meal.dart';
+import 'package:foodster/Model/MealPlan.dart';
 import 'package:foodster/Model/Nutrition.dart';
 import 'package:foodster/Model/Preferences.dart';
 import 'package:foodster/Model/User.dart';
 import 'package:foodster/components/busy_spinkit.dart';
 import 'package:foodster/components/ingredient_list.dart';
+import 'package:foodster/components/meal_card.dart';
 import 'package:foodster/components/preferences_card.dart';
 import 'package:foodster/components/recipe_list.dart';
 import 'package:foodster/controllers/http_caller.dart';
@@ -150,6 +153,7 @@ class _UserPageState extends State<UserPage> {
       likedRecipes: likedRecipe,
       dislikedRecipes: dislikedRecipe);
 
+  Meal likedRecipesMeal;
   bool isLoading = true;
 
   @override
@@ -181,9 +185,11 @@ class _UserPageState extends State<UserPage> {
         ? [0, 0]
         : tempUser.preferences.protRange;
     tempUser.likedRecipes = likedRecipes;
+    Meal tempMeal = new Meal(name: "Liked Recipes", servings: likedRecipes.map((e) => e.toServing()).toList() ) ;
     setState(() {
       user = tempUser;
       isLoading = false;
+      likedRecipesMeal = tempMeal;
     });
   }
 
@@ -260,7 +266,8 @@ class _UserPageState extends State<UserPage> {
 //        IngredientList(ingredients: user.dislikedIngredients),
 //        Divider(),
         buildHeading(title: "Liked Recipes"),
-        RecipeList(recipes: user.likedRecipes),
+        //RecipeList(recipes: user.likedRecipes),
+        MealCard(meal: likedRecipesMeal, hasHeader: false, canLikeMeals: false,),
         Divider(),
 //        buildHeading(title: "Disliked Recipes"),
 //        RecipeList(recipes: user.dislikedRecipes),
