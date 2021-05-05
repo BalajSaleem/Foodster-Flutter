@@ -160,8 +160,8 @@ class _UserPageState extends State<UserPage> {
   }
 
   void fetchUser() async {
-    User tempUser = await HttpCaller.fetchUser();
-    List<Recipe> likedRecipes = await HttpCaller.fetchLikedRecipes();
+    User tempUser = await HttpCaller.fetchUser(contextForTokenExpirationHandling: context);
+    List<Recipe> likedRecipes = await HttpCaller.fetchLikedRecipes(contextForTokenExpirationHandling: context);
     tempUser.height = tempUser.height == null ? 180 : tempUser.height;
     tempUser.weight = tempUser.weight == null ? 60 : tempUser.weight;
     tempUser.gender = tempUser.gender == null ? 'unspecified' : tempUser.gender;

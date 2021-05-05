@@ -19,7 +19,7 @@ class _MealCardState extends State<MealCard> {
   List<String> likedRecipes = [];
 
   void likeRecipe(String recipeName) async {
-    String result = await HttpCaller.likeRecipe(recipeName);
+    String result = await HttpCaller.likeRecipe(recipeName, contextForTokenExpirationHandling: context);
     print(result);
     setState(() {
       likedRecipes.add(recipeName);

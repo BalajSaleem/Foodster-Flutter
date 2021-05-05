@@ -22,7 +22,7 @@ class _RecipePageState extends State<RecipePage> {
   }
 
   void fetchTopRecipes( {int n = 30} ) async {
-    Meal tempMeal = await HttpCaller.fetchTopRecipesMeal(n);
+    Meal tempMeal = await HttpCaller.fetchTopRecipesMeal(n, contextForTokenExpirationHandling: context);
     setState(() {
       meal = tempMeal;
       isLoading = false;
