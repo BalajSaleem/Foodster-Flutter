@@ -327,7 +327,7 @@ class HttpCaller {
   }
 
   static void _tokenExpirationSentinel(http.Response response, BuildContext contextForTokenExpirationHandling){
-    if(contextForTokenExpirationHandling != null && response.statusCode == 403) {
+    if(contextForTokenExpirationHandling != null && (response.statusCode == 401 || response.statusCode == 403)) {
       tokenExpired(contextForTokenExpirationHandling);
     }
   }
