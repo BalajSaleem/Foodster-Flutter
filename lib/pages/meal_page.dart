@@ -109,25 +109,40 @@ class _MealPageState extends State<MealPage> {
   @override
   Widget build(BuildContext context) {
     return Builder(
-      builder: (context) => SingleChildScrollView(
-          //padding: EdgeInsets.all(12),
-          child: Column(
+      builder: (context) => Stack(
         children: [
-          buildDatePicker(context),
-          (meals.isEmpty)
-              ? (!isLoading)
-                  ? BigButton(text: "Add Meals", onClick: fetchMeals)
-                  : Loader()
-              : Column(
-                  children: meals
-                      .map((meal) => MealCard(
-                            meal: meal,
-                          ))
-                      .toList(),
-                )
-          //
+          Align(
+            alignment: Alignment.bottomRight,
+            child: FloatingActionButton(
+              backgroundColor: Colors.greenAccent,
+              child: IconButton(
+                icon: Icon(  Icons.refresh , color: Colors.white,),
+                onPressed: fetchMeals ,
+              ),
+                onPressed: fetchMeals
+            )
+          ),
+          SingleChildScrollView(
+              //padding: EdgeInsets.all(12),
+              child: Column(
+            children: [
+              buildDatePicker(context),
+              (meals.isEmpty)
+                  ? (!isLoading)
+                      ? BigButton(text: "Add Meals", onClick: fetchMeals)
+                      : Loader()
+                  : Column(
+                      children: meals
+                          .map((meal) => MealCard(
+                                meal: meal,
+                              ))
+                          .toList(),
+                    )
+              //
+            ],
+          )),
         ],
-      )),
+      ),
     );
   }
 

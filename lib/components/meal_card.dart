@@ -91,69 +91,99 @@ class _MealCardState extends State<MealCard> {
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12.0, vertical: 4),
-                        child: Row(
-                          children: [
-                            Text(
-                              serving.recipe.name.trim(),
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              maxLines: 1,
-                              style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            IconButton(
-                                icon: Icon(
-                                  Icons.thumb_up,
-                                  color:
-                                      likedRecipes.contains(serving.recipe.name)
-                                          ? Colors.greenAccent
-                                          : Colors.grey,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.75,
+                          child: Row(
+                            children: [
+                              Flexible(
+                                flex: 3,
+                                child: Text(
+                                  serving.recipe.name.trim(),
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      color: Colors.grey[400],
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500),
                                 ),
-                                onPressed: () async {
-                                  likeRecipe(serving.recipe.name);
-                                })
-                          ],
+                              ),
+                              Flexible(
+                                flex: 1,
+                                child: IconButton(
+                                    icon: Icon(
+                                      Icons.thumb_up,
+                                      color:
+                                          likedRecipes.contains(serving.recipe.name)
+                                              ? Colors.greenAccent
+                                              : Colors.grey,
+                                    ),
+                                    onPressed: () async {
+                                      likeRecipe(serving.recipe.name);
+                                    }),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "${UiUtils.firstLetterUppercase(serving.recipe.nutrition.calories.unit)}:  ${(serving.recipe.nutrition.calories.mag)} "
-                                  .trim(),
-                              style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Text(
-                              "Cook Time: ${(serving.recipe.cookTime)} min"
-                                  .trim(),
-                              style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Text(
-                              (serving.recipe.estimatedPrice) == null
-                                  ? ''
-                                  : "Price : ${(serving.recipe.estimatedPrice)} TL"
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.75,
+                          child: Row(
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                child: Text(
+                                  "${UiUtils.firstLetterUppercase(serving.recipe.nutrition.calories.unit)}:  ${(serving.recipe.nutrition.calories.mag)} "
                                       .trim(),
-                              style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w300),
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.grey[400],
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              ),
+                            SizedBox(
+                              width: 30,
                             ),
-                          ],
+                              Flexible(
+                                flex: 1,
+                                child: Text(
+                                  "Cook Time: ${(serving.recipe.cookTime)} min"
+                                      .trim(),
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.grey[400],
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                              Flexible(
+                                flex: 1,
+                                child: Text(
+                                  (serving.recipe.estimatedPrice) == null
+                                      ? ''
+                                      : "Price : ${(serving.recipe.estimatedPrice)} TL"
+                                          .trim(),
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      color: Colors.grey[400],
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(
